@@ -23,10 +23,13 @@
         /// содержимое этого метода с помощью редактора кода.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.grid = new System.Windows.Forms.DataGridView();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.playerLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.winsLabel = new System.Windows.Forms.Label();
+            this.lossLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -45,7 +48,7 @@
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel,
             this.playerLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 506);
+            this.statusStrip.Location = new System.Drawing.Point(0, 549);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(507, 22);
             this.statusStrip.SizingGrip = false;
@@ -63,14 +66,37 @@
             this.playerLabel.Name = "playerLabel";
             this.playerLabel.Size = new System.Drawing.Size(0, 17);
             // 
+            // winsLabel
+            // 
+            this.winsLabel.AutoSize = true;
+            this.winsLabel.Font = new System.Drawing.Font("Arkhip", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.winsLabel.Location = new System.Drawing.Point(12, 518);
+            this.winsLabel.Name = "winsLabel";
+            this.winsLabel.Size = new System.Drawing.Size(118, 19);
+            this.winsLabel.TabIndex = 2;
+            this.winsLabel.Text = "Побед: 0 / 0";
+            // 
+            // lossLabel
+            // 
+            this.lossLabel.AutoSize = true;
+            this.lossLabel.Font = new System.Drawing.Font("Arkhip", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lossLabel.Location = new System.Drawing.Point(307, 518);
+            this.lossLabel.Name = "lossLabel";
+            this.lossLabel.Size = new System.Drawing.Size(169, 19);
+            this.lossLabel.TabIndex = 3;
+            this.lossLabel.Text = "Поражений: 0 / 0";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(507, 528);
+            this.ClientSize = new System.Drawing.Size(507, 571);
+            this.Controls.Add(this.lossLabel);
+            this.Controls.Add(this.winsLabel);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.grid);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Gomoku";
@@ -88,6 +114,8 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.ToolStripStatusLabel playerLabel;
+        private System.Windows.Forms.Label winsLabel;
+        private System.Windows.Forms.Label lossLabel;
     }
 }
 

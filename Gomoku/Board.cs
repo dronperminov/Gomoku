@@ -6,6 +6,19 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Gomoku {
+    // ход для AI
+    struct Move {
+        public int i; // строка
+        public int j; // столбец
+        public int importance; // важность
+
+        public Move(int i, int j, int importance = 0) {
+            this.i = i;
+            this.j = j;
+            this.importance = importance;
+        }
+    }
+
     struct BoardCell {
         public string value;
         public Color color;
@@ -20,6 +33,7 @@ namespace Gomoku {
 
     class Board {
         int n, m;
+        int lostCells;
         BoardCell[,] board;
 
         public Board(int n, int m) {
@@ -27,6 +41,7 @@ namespace Gomoku {
             this.m = m;
 
             board = new BoardCell[n, m];
+            lostCells = n * m;
 
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < m; j++)
@@ -34,13 +49,20 @@ namespace Gomoku {
         }
 
         public BoardCell this[int i, int j] {
-            get { return board[i, j]; }
-            set { board[i, j] = value; }
+            get {
+                return  board[i, j];
+            }
+
+            set {
+                board[i, j] = value;
+            }
         }
 
-        public void setPlayer(int i, int j, Player player) {
+        public void SetStep(int i, int j, Player player) {
             board[i, j].value = player.character;
             board[i, j].color = player.color;
+
+            lostCells--;
         }
 
         public void Draw(DataGridView grid) {
@@ -49,10 +71,15 @@ namespace Gomoku {
                     grid[j, i].Value = board[i, j].value;
                     grid[j, i].Style.ForeColor = board[i, j].color;
                     grid[j, i].Style.SelectionForeColor = board[i, j].color;
+                    grid[j, i].Style.BackColor = Color.White;
                 }
             }
 
             grid.Update();
+        }
+
+        public int GetLostCells() {
+            return lostCells;
         }
     }
 }
