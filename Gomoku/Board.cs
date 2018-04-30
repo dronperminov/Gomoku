@@ -71,7 +71,9 @@ namespace Gomoku {
                     grid[j, i].Value = board[i, j].value;
                     grid[j, i].Style.ForeColor = board[i, j].color;
                     grid[j, i].Style.SelectionForeColor = board[i, j].color;
-                    grid[j, i].Style.BackColor = Color.White;
+                    grid[j, i].Style.BackColor = Properties.Settings.Default.BoardBackColor;
+                    grid[j, i].Style.Font = new Font("Arial", Properties.Settings.Default.CellSize / 2);
+                    grid[j, i].ReadOnly = board[i, j].value != "";
                 }
             }
 

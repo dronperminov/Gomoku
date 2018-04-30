@@ -30,14 +30,18 @@
             this.playerLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.winsLabel = new System.Windows.Forms.Label();
             this.lossLabel = new System.Windows.Forms.Label();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.RestartMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.statusStrip.SuspendLayout();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // grid
             // 
             this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grid.Location = new System.Drawing.Point(12, 12);
+            this.grid.Location = new System.Drawing.Point(12, 32);
             this.grid.Name = "grid";
             this.grid.Size = new System.Drawing.Size(483, 483);
             this.grid.TabIndex = 0;
@@ -86,6 +90,35 @@
             this.lossLabel.TabIndex = 3;
             this.lossLabel.Text = "Поражений: 0 / 0";
             // 
+            // menuStrip
+            // 
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.RestartMenuItem,
+            this.ExitMenuItem});
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(507, 24);
+            this.menuStrip.TabIndex = 4;
+            this.menuStrip.Text = "menuStrip1";
+            // 
+            // RestartMenuItem
+            // 
+            this.RestartMenuItem.Name = "RestartMenuItem";
+            this.RestartMenuItem.ShortcutKeyDisplayString = "ctrl+R";
+            this.RestartMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.RestartMenuItem.Size = new System.Drawing.Size(99, 20);
+            this.RestartMenuItem.Text = "Начать заново";
+            this.RestartMenuItem.Click += new System.EventHandler(this.RestartMenuItem_Click);
+            // 
+            // ExitMenuItem
+            // 
+            this.ExitMenuItem.Name = "ExitMenuItem";
+            this.ExitMenuItem.ShortcutKeyDisplayString = "ctrl+Q";
+            this.ExitMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+            this.ExitMenuItem.Size = new System.Drawing.Size(53, 20);
+            this.ExitMenuItem.Text = "Выход";
+            this.ExitMenuItem.Click += new System.EventHandler(this.ExitMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -94,15 +127,21 @@
             this.Controls.Add(this.lossLabel);
             this.Controls.Add(this.winsLabel);
             this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.menuStrip);
             this.Controls.Add(this.grid);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip;
             this.MaximizeBox = false;
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Gomoku";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -116,6 +155,9 @@
         private System.Windows.Forms.ToolStripStatusLabel playerLabel;
         private System.Windows.Forms.Label winsLabel;
         private System.Windows.Forms.Label lossLabel;
+        private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem RestartMenuItem;
     }
 }
 

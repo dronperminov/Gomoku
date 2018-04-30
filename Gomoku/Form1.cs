@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Gomoku.Properties;
 
 namespace Gomoku {
     public partial class MainForm : Form {
-        const int boardWidth = 19; // ширина игрового поля
-        const int boardHeight = 19; // высота игрового поля
-        const int cellSize = 32; // размер клетки в пикселях
+        const int boardWidth = 15; // ширина игрового поля
+        const int boardHeight = 15; // высота игрового поля
         const int winCount = 5; // нужно собрать 5 в ряд
 
-        const double complexity = 0.5; // сложность игры (0, 1]
+        const double complexity = 1; // сложность игры (0, 1]
 
         const int winner = 1; // есть победитель
         const int noWinners = 0; // нет победителя (ничья)
@@ -41,10 +41,10 @@ namespace Gomoku {
 
             grid.ReadOnly = true;
             grid.MultiSelect = false;
-            grid.Width = boardWidth * cellSize + 3;
-            grid.Height = boardHeight * cellSize + 3;
+            grid.Width = boardWidth * Settings.Default.CellSize + 3;
+            grid.Height = boardHeight * Settings.Default.CellSize + 3;
 
-            MinimumSize = new Size(grid.Width + 40, grid.Height + 110);
+            MinimumSize = new Size(grid.Width + 40, grid.Height + 130);
             Height = MinimumSize.Height;
             Width = MinimumSize.Width;
 
@@ -56,20 +56,20 @@ namespace Gomoku {
                 cell.Style.SelectionBackColor = Color.WhiteSmoke;
                 cell.Style.SelectionForeColor = Color.Black;
                 cell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                cell.Style.Font = new Font("Arial", cellSize / 2);
+                cell.Style.Font = new Font("Arial", Settings.Default.CellSize / 2);
 
                 DataGridViewColumn col = new DataGridViewColumn(cell);
-                col.Width = cellSize;
+                col.Width = Settings.Default.CellSize;
                 grid.Columns.Add(col);
             }
 
             for (int i = 0; i < boardHeight; i++) {
                 grid.Rows.Add();
-                grid.Rows[i].Height = cellSize;
+                grid.Rows[i].Height = Settings.Default.CellSize;
 
                 for (int j = 0; j < boardWidth; j++) {
                     grid[j, i].Value = "";
-                    grid[j, i].Style.BackColor = Color.White;
+                    grid[j, i].Style.BackColor = Settings.Default.BoardBackColor;
                 }
             }
         }
@@ -225,7 +225,7 @@ namespace Gomoku {
                 return;
             }
 
-            ai.MakeMove(ref gameBoard, aiPlayer, huPlayer, aiPlayer, 1);
+            ai.MakeMove(ref gameBoard, aiPlayer, huPlayer, aiPlayer, complexity);
             gameBoard.Draw(grid);
 
             playerLabel.Text = huPlayer.character;
@@ -239,6 +239,22 @@ namespace Gomoku {
             InitializeComponent();
             InitGrid();
             InitGame();
+        }
+
+        private void ExitMenuItem_Click(object sender, EventArgs e) {
+            if (MessageBox.Show("Вы уверены, что хотите выйти?", "Требуется подтверждение закрытия", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                Close();
+        }
+
+        private void RestartMenuItem_Click(object sender, EventArgs e) {
+            if (MessageBox.Show("Вы уверены, что хотите начать заново?", "Требуется подтверждение закрытия", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+                isUserFirst = !isUserFirst;
+                InitGame();
+            }
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
+            e.Cancel = MessageBox.Show("Вы уверены, что хотите выйти?", "Требуется подтверждение закрытия", MessageBoxButtons.YesNo) != DialogResult.Yes;
         }
     }
 }

@@ -211,6 +211,9 @@ namespace Gomoku {
                     }
                 }
 
+                if (aiImportance >= fiveScore)
+                    aiImportance *= 10;
+
                 availableMoves[i] = new Move(availableMoves[i].i, availableMoves[i].j, Math.Max(huImportance, aiImportance));
             }
         }
@@ -224,7 +227,23 @@ namespace Gomoku {
                 if (availableMoves[i].importance > availableMoves[index].importance)
                     index = i;
 
-            Move move = availableMoves[index];
+            Move move;
+
+            if (availableMoves[index].importance == 0) {
+                move = availableMoves[rnd.Next(availableMoves.Count)];
+            }
+            else {
+                int importance = availableMoves[index].importance;
+
+                List<Move> maxImportantMoves = new List<Move>();
+
+                for (int i = 0; i < availableMoves.Count; i++)
+                    if (availableMoves[i].importance == importance)
+                        maxImportantMoves.Add(availableMoves[i]);
+
+                move = maxImportantMoves[rnd.Next(maxImportantMoves.Count)];
+            }
+
             RemoveMove(move.i, move.j);
 
             board.SetStep(move.i, move.j, player);
