@@ -23,7 +23,8 @@ namespace Gomoku {
         const int halfClosedFourWithBreachScore = 20;
         const int halfClosedThreeScore = 15;
         const int halfClosedThreeWithBreachScore = 8;
-        const int openedTwoScore = 2;
+        const int openedTwoScore = 4;
+        const int halfClosedTwoScore = 2;
 
         List<Move> availableMoves;
         int n, m;
@@ -55,6 +56,9 @@ namespace Gomoku {
             new Template("# ## ", halfClosedThreeWithBreachScore), // полузакрытая тройка с брешью
 
             new Template(" ## ", openedTwoScore), // открытая двойка
+
+            new Template("## ", openedTwoScore), // полузакрытая двойка
+            new Template(" ##", openedTwoScore), // полузакрытая двойка
         };
 
         public GomokuAI(int n, int m, bool isUserFirst) {
@@ -64,26 +68,13 @@ namespace Gomoku {
 
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < m; j++)
-                    AddMove(new Move(i, j));
+                    availableMoves.Add(new Move(i, j));
             
             if (!isUserFirst) {
                 RemoveMove(n / 2, m / 2);
             }            
 
             rnd = new Random();
-        }
-
-        public bool haveMove(Move move) {
-            for (int i = 0; i < availableMoves.Count; i++)
-                if (availableMoves[i].i == move.i && availableMoves[i].j == move.j)
-                    return true;
-
-            return false;
-        }
-
-        public void AddMove(Move move) {
-            if (!haveMove(move))
-                availableMoves.Add(move);
         }
 
         public void RemoveMove(int i0, int j0) {
@@ -108,7 +99,7 @@ namespace Gomoku {
                 else if (board[i, j0].value == "") {
                     lines[0] += " ";
                 }
-                else if (board[i, j0].value == player.character) {
+                else if (board.IsPlayerCell(i, j0, player)) {
                     lines[0] += "#";
                 }
                 else {
@@ -126,7 +117,7 @@ namespace Gomoku {
                 else if (board[i0, j].value == "") {
                     lines[1] += " ";
                 }
-                else if (board[i0, j].value == player.character) {
+                else if (board.IsPlayerCell(i0, j, player)) {
                     lines[1] += "#";
                 }
                 else {
@@ -144,7 +135,7 @@ namespace Gomoku {
                 else if (board[i0 + k, j0 + k].value == "") {
                     lines[2] += " ";
                 }
-                else if (board[i0 + k, j0 + k].value == player.character) {
+                else if (board.IsPlayerCell(i0 + k, j0 + k, player)) {
                     lines[2] += "#";
                 }
                 else {
@@ -162,7 +153,7 @@ namespace Gomoku {
                 else if (board[i0 + k, j0 - k].value == "") {
                     lines[3] += " ";
                 }
-                else if (board[i0 + k, j0 - k].value == player.character) {
+                else if (board.IsPlayerCell(i0 + k, j0 - k, player)) {
                     lines[3] += "#";
                 }
                 else {

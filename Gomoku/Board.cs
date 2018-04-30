@@ -78,6 +78,10 @@ namespace Gomoku {
             grid.Update();
         }
 
+        public bool IsPlayerCell(int i, int j, Player player) {
+            return board[i, j].value == player.character && board[i, j].color == player.color;
+        }
+
         public int GetLostCells() {
             return lostCells;
         }

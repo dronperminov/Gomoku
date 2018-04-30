@@ -4,12 +4,12 @@ using System.Windows.Forms;
 
 namespace Gomoku {
     public partial class MainForm : Form {
-        const int boardWidth = 15; // ширина игрового поля
-        const int boardHeight = 15; // высота игрового поля
+        const int boardWidth = 19; // ширина игрового поля
+        const int boardHeight = 19; // высота игрового поля
         const int cellSize = 32; // размер клетки в пикселях
         const int winCount = 5; // нужно собрать 5 в ряд
 
-        const double complexity = 0.9; // сложность игры (0, 1]
+        const double complexity = 0.5; // сложность игры (0, 1]
 
         const int winner = 1; // есть победитель
         const int noWinners = 0; // нет победителя (ничья)
@@ -108,7 +108,7 @@ namespace Gomoku {
                 for (int i = 0; i <= boardHeight - winCount; i++) {
                     int k = 0;
 
-                    while (k < winCount && gameBoard[i + k, j].value == player.character && gameBoard[i + k, j].color == player.color)
+                    while (k < winCount && gameBoard.IsPlayerCell(i + k, j, player))
                         k++;
 
                     if (k == winCount) {
@@ -122,7 +122,7 @@ namespace Gomoku {
                 for (int j = 0; j <= boardWidth - winCount; j++) {
                     int k = 0;
 
-                    while (k < winCount && gameBoard[i, j + k].value == player.character && gameBoard[i, j + k].color == player.color)
+                    while (k < winCount && gameBoard.IsPlayerCell(i, j + k, player))
                         k++;
 
                     if (k == winCount) {
@@ -136,7 +136,7 @@ namespace Gomoku {
                 for (int j = 0; j <= boardWidth - winCount; j++) {
                     int k = 0;
 
-                    while (k < winCount && gameBoard[i + k, j + k].value == player.character && gameBoard[i + k, j + k].color == player.color)
+                    while (k < winCount && gameBoard.IsPlayerCell(i + k, j + k, player))
                         k++;
 
                     if (k == winCount) {
@@ -150,7 +150,7 @@ namespace Gomoku {
                 for (int j = winCount - 1; j < boardWidth; j++) {
                     int k = 0;
 
-                    while (k < winCount && gameBoard[i - k, j - winCount + 1 + k].value == player.character && gameBoard[i - k, j - winCount + 1 + k].color == player.color)
+                    while (k < winCount && gameBoard.IsPlayerCell(i - k, j - winCount + 1 + k, player))
                         k++;
 
                     if (k == winCount) {
