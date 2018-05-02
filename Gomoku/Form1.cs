@@ -25,6 +25,7 @@ namespace Gomoku {
 
         Board gameBoard = null; // игровая доска
         GomokuAI ai = null; // компьютерный алгоритм обсчёта
+        Move lastMove; // последний ход, сделанный AI
 
         int wins = 0; // количество побед человека
         int totals = 0; // общее число игр
@@ -53,8 +54,8 @@ namespace Gomoku {
 
             for (int i = 0; i < boardWidth; i++) {
                 DataGridViewCell cell = new DataGridViewTextBoxCell();
-                cell.Style.SelectionBackColor = Color.WhiteSmoke;
-                cell.Style.SelectionForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Settings.Default.BoardSelectionBackColor;
+                cell.Style.SelectionForeColor = Settings.Default.BoardSelectionForeColor;
                 cell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 cell.Style.Font = new Font("Arial", Settings.Default.CellSize / 2);
 
@@ -225,9 +226,13 @@ namespace Gomoku {
                 return;
             }
 
-            ai.MakeMove(ref gameBoard, aiPlayer, huPlayer, aiPlayer, complexity);
+            grid[lastMove.j, lastMove.i].Style.BackColor = Settings.Default.BoardBackColor;
+
+            lastMove = ai.MakeMove(ref gameBoard, aiPlayer, huPlayer, aiPlayer, complexity);
             gameBoard.Draw(grid);
 
+            grid[lastMove.j, lastMove.i].Style.BackColor = Settings.Default.AImoveBackColor;
+            
             playerLabel.Text = huPlayer.character;
             playerLabel.ForeColor = huPlayer.color;
 
@@ -242,8 +247,10 @@ namespace Gomoku {
         }
 
         private void ExitMenuItem_Click(object sender, EventArgs e) {
-            if (MessageBox.Show("Вы уверены, что хотите выйти?", "Требуется подтверждение закрытия", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show("Вы уверены, что хотите выйти?", "Требуется подтверждение закрытия", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+                FormClosing -= MainForm_FormClosing;
                 Close();
+            }
         }
 
         private void RestartMenuItem_Click(object sender, EventArgs e) {

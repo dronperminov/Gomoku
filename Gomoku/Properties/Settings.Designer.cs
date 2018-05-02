@@ -46,5 +46,41 @@ namespace Gomoku.Properties {
                 this["CellSize"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("WhiteSmoke")]
+        public global::System.Drawing.Color BoardSelectionBackColor {
+            get {
+                return ((global::System.Drawing.Color)(this["BoardSelectionBackColor"]));
+            }
+            set {
+                this["BoardSelectionBackColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Black")]
+        public global::System.Drawing.Color BoardSelectionForeColor {
+            get {
+                return ((global::System.Drawing.Color)(this["BoardSelectionForeColor"]));
+            }
+            set {
+                this["BoardSelectionForeColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MistyRose")]
+        public global::System.Drawing.Color AImoveBackColor {
+            get {
+                return ((global::System.Drawing.Color)(this["AImoveBackColor"]));
+            }
+            set {
+                this["AImoveBackColor"] = value;
+            }
+        }
     }
 }

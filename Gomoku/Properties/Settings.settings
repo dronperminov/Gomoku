@@ -8,5 +8,14 @@
     <Setting Name="CellSize" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">32</Value>
     </Setting>
+    <Setting Name="BoardSelectionBackColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">WhiteSmoke</Value>
+    </Setting>
+    <Setting Name="BoardSelectionForeColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Black</Value>
+    </Setting>
+    <Setting Name="AImoveBackColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">MistyRose</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
