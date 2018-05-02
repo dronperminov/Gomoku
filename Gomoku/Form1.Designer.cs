@@ -33,6 +33,9 @@
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.RestartMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.complexityLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.levelLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.resetProgressMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -51,7 +54,9 @@
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel,
-            this.playerLabel});
+            this.playerLabel,
+            this.levelLabel,
+            this.complexityLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 549);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(507, 22);
@@ -94,6 +99,7 @@
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.RestartMenuItem,
+            this.resetProgressMenuItem,
             this.ExitMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
@@ -118,6 +124,27 @@
             this.ExitMenuItem.Size = new System.Drawing.Size(53, 20);
             this.ExitMenuItem.Text = "Выход";
             this.ExitMenuItem.Click += new System.EventHandler(this.ExitMenuItem_Click);
+            // 
+            // complexityLabel
+            // 
+            this.complexityLabel.Margin = new System.Windows.Forms.Padding(20, 3, 0, 2);
+            this.complexityLabel.Name = "complexityLabel";
+            this.complexityLabel.Size = new System.Drawing.Size(72, 17);
+            this.complexityLabel.Text = "Сложность:";
+            // 
+            // levelLabel
+            // 
+            this.levelLabel.Margin = new System.Windows.Forms.Padding(20, 3, 0, 2);
+            this.levelLabel.Name = "levelLabel";
+            this.levelLabel.Size = new System.Drawing.Size(56, 17);
+            this.levelLabel.Text = "Уровень:";
+            // 
+            // resetProgressMenuItem
+            // 
+            this.resetProgressMenuItem.Name = "resetProgressMenuItem";
+            this.resetProgressMenuItem.Size = new System.Drawing.Size(126, 20);
+            this.resetProgressMenuItem.Text = "Сбросить прогресс";
+            this.resetProgressMenuItem.Click += new System.EventHandler(this.resetProgressMenuItem_Click);
             // 
             // MainForm
             // 
@@ -158,6 +185,9 @@
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RestartMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel complexityLabel;
+        private System.Windows.Forms.ToolStripStatusLabel levelLabel;
+        private System.Windows.Forms.ToolStripMenuItem resetProgressMenuItem;
     }
 }
 

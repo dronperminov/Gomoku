@@ -17,5 +17,8 @@
     <Setting Name="AImoveBackColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">MistyRose</Value>
     </Setting>
+    <Setting Name="level" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

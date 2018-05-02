@@ -9,7 +9,13 @@ namespace Gomoku {
         const int boardHeight = 15; // высота игрового поля
         const int winCount = 5; // нужно собрать 5 в ряд
 
-        const double complexity = 1; // сложность игры (0, 1]
+        const double maxComplexity = 1; // максимальная сложность игры
+        const double minComplexity = 0.04; // стартовое значение сложности
+        const double complexityStep = 0.08; // шаг увеличения сложности
+
+        const int levels = (int) ((maxComplexity - minComplexity) / complexityStep);
+        const int winsForLevelUp = 7; // победных игр для перехода на новый уровень
+        const int lossForLevelDown = 7; // поражений для уменьшения уровня
 
         const int winner = 1; // есть победитель
         const int noWinners = 0; // нет победителя (ничья)
@@ -30,6 +36,11 @@ namespace Gomoku {
         int wins = 0; // количество побед человека
         int totals = 0; // общее число игр
         int loss = 0; // количество проигрышей
+
+        int winsPerLevel = 0; // выигрышей человека за уровень
+        int lossPerLevel = 0; // проигрышей человека за уровень
+
+        double complexity;
 
         void InitGrid() {
             grid.AllowUserToAddRows = false;
@@ -86,9 +97,13 @@ namespace Gomoku {
                 gameBoard.SetStep(boardHeight / 2, boardWidth / 2, aiPlayer);
 
             isUserFirst = !isUserFirst;
+            complexity = minComplexity + (Settings.Default.level - 1) * complexityStep;
 
             playerLabel.Text = huPlayer.character;
             playerLabel.ForeColor = huPlayer.color;
+
+            levelLabel.Text = "Уровень: " + Settings.Default.level + " / " + levels;
+            complexityLabel.Text = "Сложность: " + (int)(complexity * 100) + "%";
 
             gameBoard.Draw(grid);
         }
@@ -171,11 +186,6 @@ namespace Gomoku {
             return gameBoard.GetLostCells() == 0 ? noWinners : notGameOver;
         }
 
-        void updateStatistic() {
-            winsLabel.Text = "Побед: " + wins + " / " + totals;
-            lossLabel.Text = "Поражений: " + loss + " / " + totals;
-        }
-
         void showWinCells(int i, int j, int istep, int jstep, int iscale = 1, int jscale = 1) {
             grid.ClearSelection();
 
@@ -190,22 +200,55 @@ namespace Gomoku {
 
             totals++;
 
-            if (status == noWinners) {
-                updateStatistic();
+            if (status != noWinners) {
+                if (player == huPlayer) {
+                    wins++;
+                    winsPerLevel++;
+                }
+                else {
+                    loss++;
+                    lossPerLevel++;
+                }
+            }
 
+            if (winsPerLevel > 0 && winsPerLevel % winsForLevelUp == 0) {
+                winsPerLevel = 0;
+                lossPerLevel = 0;
+
+                if (Settings.Default.level < levels) {
+                    Settings.Default.level++;
+                    Settings.Default.Save();
+
+                    MessageBox.Show("Поздравляю, Вы одержали победу " + lossForLevelDown + " раз за этот уровень. ", "Уровень был повышен на 1");
+                }
+                else {
+                    MessageBox.Show("Ура! Игра пройдена! Поздравляем!", "Игра окончена");
+                }
+            }
+            else if (lossPerLevel > 0 && lossPerLevel % lossForLevelDown == 0) {
+                winsPerLevel = 0;
+                lossPerLevel = 0;
+
+                if (Settings.Default.level > 1) {
+                    Settings.Default.level--;
+                    Settings.Default.Save();
+
+                    MessageBox.Show("К сожалению, Вы потерпели поражение " + lossForLevelDown + " раз за этот уровень. ", "Уровень был понижен на 1");
+                }
+            }
+
+            winsLabel.Text = "Побед: " + wins + " / " + totals;
+            lossLabel.Text = "Поражений: " + loss + " / " + totals;
+            levelLabel.Text = "Уровень: " + Settings.Default.level + " / " + levels;
+            complexityLabel.Text = "Сложность: " + (int)(complexity * 100) + "%";
+
+            if (status == noWinners) {
                 result = MessageBox.Show("Желаете повторить игру?", "Ничья!", MessageBoxButtons.YesNo);
             }
             else if (player == huPlayer) {
-                wins++;
-                updateStatistic();
-
                 result = MessageBox.Show("Желаете повторить игру?", "Победил ЧЕЛОВЕК!", MessageBoxButtons.YesNo);
             }
             else if (player == aiPlayer) {
-                loss++;
-
-                updateStatistic();
-
                 result = MessageBox.Show("Желаете повторить игру?", "Победил КОМПЬЮТЕР!", MessageBoxButtons.YesNo);
             }
 
@@ -213,6 +256,7 @@ namespace Gomoku {
                 InitGame();
             }
             else {
+                FormClosing -= MainForm_FormClosing;
                 Close();
             }
         }
@@ -258,10 +302,31 @@ namespace Gomoku {
                 isUserFirst = !isUserFirst;
                 InitGame();
             }
+            else {
+                FormClosing -= MainForm_FormClosing;
+                Close();
+            }
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
             e.Cancel = MessageBox.Show("Вы уверены, что хотите выйти?", "Требуется подтверждение закрытия", MessageBoxButtons.YesNo) != DialogResult.Yes;
+        }
+
+        private void resetProgressMenuItem_Click(object sender, EventArgs e) {
+            if (MessageBox.Show("Вы уверены, что хотите сбросить прогресс и вернуться на 1 уровень?\nВнимание, игра начнётся заново!", "Требуется подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                return;
+
+            winsPerLevel = 0;
+            lossPerLevel = 0;
+            totals = 0;
+            wins = 0;
+            loss = 0;
+
+            Settings.Default.level = 1;
+            Settings.Default.Save();
+
+            isUserFirst = !isUserFirst;
+            InitGame();
         }
     }
 }
