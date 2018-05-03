@@ -23,63 +23,30 @@ namespace Gomoku.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("White")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Transparent")]
         public global::System.Drawing.Color BoardBackColor {
             get {
                 return ((global::System.Drawing.Color)(this["BoardBackColor"]));
             }
-            set {
-                this["BoardBackColor"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("32")]
         public int CellSize {
             get {
                 return ((int)(this["CellSize"]));
             }
-            set {
-                this["CellSize"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("WhiteSmoke")]
-        public global::System.Drawing.Color BoardSelectionBackColor {
-            get {
-                return ((global::System.Drawing.Color)(this["BoardSelectionBackColor"]));
-            }
-            set {
-                this["BoardSelectionBackColor"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Black")]
-        public global::System.Drawing.Color BoardSelectionForeColor {
-            get {
-                return ((global::System.Drawing.Color)(this["BoardSelectionForeColor"]));
-            }
-            set {
-                this["BoardSelectionForeColor"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("MistyRose")]
         public global::System.Drawing.Color AImoveBackColor {
             get {
                 return ((global::System.Drawing.Color)(this["AImoveBackColor"]));
-            }
-            set {
-                this["AImoveBackColor"] = value;
             }
         }
         
@@ -92,6 +59,24 @@ namespace Gomoku.Properties {
             }
             set {
                 this["level"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("PapayaWhip")]
+        public global::System.Drawing.Color BoardSelectionBackColor {
+            get {
+                return ((global::System.Drawing.Color)(this["BoardSelectionBackColor"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Параметр {
+            get {
+                return ((string)(this["Параметр"]));
             }
         }
     }

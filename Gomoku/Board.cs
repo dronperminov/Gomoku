@@ -65,19 +65,14 @@ namespace Gomoku {
             lostCells--;
         }
 
-        public void Draw(DataGridView grid) {
+        public void Draw(Grid grid) {
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < m; j++) {
-                    grid[j, i].Value = board[i, j].value;
-                    grid[j, i].Style.ForeColor = board[i, j].color;
-                    grid[j, i].Style.SelectionForeColor = board[i, j].color;
-                    grid[j, i].Style.BackColor = Properties.Settings.Default.BoardBackColor;
-                    grid[j, i].Style.Font = new Font("Arial", Properties.Settings.Default.CellSize / 2);
-                    grid[j, i].ReadOnly = board[i, j].value != "";
+                    grid[i, j].button.Text = board[i, j].value;
+                    grid[i, j].button.ForeColor = board[i, j].color;
+                    grid[i, j].button.BackColor = Color.Transparent;
                 }
             }
-
-            grid.Update();
         }
 
         public bool IsPlayerCell(int i, int j, Player player) {

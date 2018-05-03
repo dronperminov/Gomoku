@@ -2,23 +2,23 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Gomoku.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="BoardBackColor" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">White</Value>
+    <Setting Name="BoardBackColor" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">Transparent</Value>
     </Setting>
-    <Setting Name="CellSize" Type="System.Int32" Scope="User">
+    <Setting Name="CellSize" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">32</Value>
     </Setting>
-    <Setting Name="BoardSelectionBackColor" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">WhiteSmoke</Value>
-    </Setting>
-    <Setting Name="BoardSelectionForeColor" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">Black</Value>
-    </Setting>
-    <Setting Name="AImoveBackColor" Type="System.Drawing.Color" Scope="User">
+    <Setting Name="AImoveBackColor" Type="System.Drawing.Color" Scope="Application">
       <Value Profile="(Default)">MistyRose</Value>
     </Setting>
     <Setting Name="level" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="BoardSelectionBackColor" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">PapayaWhip</Value>
+    </Setting>
+    <Setting Name="Параметр" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

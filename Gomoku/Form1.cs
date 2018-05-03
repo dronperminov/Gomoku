@@ -21,7 +21,7 @@ namespace Gomoku {
         const int noWinners = 0; // нет победителя (ничья)
         const int notGameOver = -1; // не конец игры
 
-        static readonly Player player1 = new Player("X", Color.Red); // первый игрок: красный крестик
+        static readonly Player player1 = new Player("X", Color.White); // первый игрок: красный крестик
         static readonly Player player2 = new Player("O", Color.Black); // второй игрок: чёрный нолик
 
         bool isUserFirst = true; // ходит ли человек первым
@@ -29,6 +29,7 @@ namespace Gomoku {
         Player huPlayer; // человек
         Player aiPlayer; // компьютер
 
+        Grid grid = null;
         Board gameBoard = null; // игровая доска
         GomokuAI ai = null; // компьютерный алгоритм обсчёта
         Move lastMove; // последний ход, сделанный AI
@@ -43,47 +44,27 @@ namespace Gomoku {
         double complexity;
 
         void InitGrid() {
-            grid.AllowUserToAddRows = false;
-            grid.AllowUserToDeleteRows = false;
-            grid.AllowUserToOrderColumns = false;
-            grid.AllowUserToResizeColumns = false;
-            grid.AllowUserToResizeRows = false;
-            grid.ColumnHeadersVisible = false;
-            grid.RowHeadersVisible = false;
+            grid = new Grid(boardWidth, boardHeight, Settings.Default.CellSize, new Point(12, 80), this);
+            grid.cellClick += huStep;
 
-            grid.ReadOnly = true;
-            grid.MultiSelect = false;
-            grid.Width = boardWidth * Settings.Default.CellSize + 3;
-            grid.Height = boardHeight * Settings.Default.CellSize + 3;
-
-            MinimumSize = new Size(grid.Width + 40, grid.Height + 130);
+            MinimumSize = new Size(grid.size.Width + 300, grid.size.Height + 130);
             Height = MinimumSize.Height;
             Width = MinimumSize.Width;
 
-            winsLabel.Location = new Point(grid.Location.X - 5, grid.Location.Y + grid.Height + 10);
-            lossLabel.Location = new Point(grid.Location.X - 5 + grid.Width / 2, grid.Location.Y + grid.Height + 10);
+            gameNameLabel.Location = new Point((Width - gameNameLabel.Width) / 2, gameNameLabel.Location.Y);
 
-            for (int i = 0; i < boardWidth; i++) {
-                DataGridViewCell cell = new DataGridViewTextBoxCell();
-                cell.Style.SelectionBackColor = Settings.Default.BoardSelectionBackColor;
-                cell.Style.SelectionForeColor = Settings.Default.BoardSelectionForeColor;
-                cell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                cell.Style.Font = new Font("Arial", Settings.Default.CellSize / 2);
+            totalLabel.Location = new Point(grid.location.X + grid.size.Width + 20, grid.location.Y);
+            winsLabel.Location = new Point(grid.location.X + grid.size.Width + 20, grid.location.Y + 25);
+            lossLabel.Location = new Point(grid.location.X + grid.size.Width + 20, grid.location.Y + 50);
 
-                DataGridViewColumn col = new DataGridViewColumn(cell);
-                col.Width = Settings.Default.CellSize;
-                grid.Columns.Add(col);
-            }
+            levelLabel.Location = new Point(grid.location.X + grid.size.Width + 20, grid.location.Y + 75);
+            complexityLabel.Location = new Point(grid.location.X + grid.size.Width + 20, grid.location.Y + 100);
 
-            for (int i = 0; i < boardHeight; i++) {
-                grid.Rows.Add();
-                grid.Rows[i].Height = Settings.Default.CellSize;
+            currMoveLabel.Location = new Point(grid.location.X + grid.size.Width + 20, grid.location.Y + 150);
+            playerLabel.Location = new Point(grid.location.X + grid.size.Width + 20 + currMoveLabel.Width, grid.location.Y + 150);
 
-                for (int j = 0; j < boardWidth; j++) {
-                    grid[j, i].Value = "";
-                    grid[j, i].Style.BackColor = Settings.Default.BoardBackColor;
-                }
-            }
+            rulesHeadlineLabel.Location = new Point(grid.location.X + grid.size.Width + 20 + (rulesLabel.Width  - rulesHeadlineLabel.Width) / 2, grid.location.Y + grid.size.Height - rulesLabel.Height - 20);
+            rulesLabel.Location = new Point(grid.location.X + grid.size.Width + 20, grid.location.Y + grid.size.Height - rulesLabel.Height);
         }
 
         void InitGame() {
@@ -102,19 +83,21 @@ namespace Gomoku {
             playerLabel.Text = huPlayer.character;
             playerLabel.ForeColor = huPlayer.color;
 
-            levelLabel.Text = "Уровень: " + Settings.Default.level + " / " + levels;
-            complexityLabel.Text = "Сложность: " + (int)(complexity * 100) + "%";
+            showInfo();
 
             gameBoard.Draw(grid);
         }
 
-        private void grid_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
-            if (!gameBoard[e.RowIndex, e.ColumnIndex].isFree())
+        void huStep(object sender, EventArgs e) {
+            Grid.GridCell cell = (Grid.GridCell) sender;
+
+            if (!gameBoard[cell.i, cell.j].isFree())
                 return;
 
-            gameBoard.SetStep(e.RowIndex, e.ColumnIndex, huPlayer);
+            gameBoard.SetStep(cell.i, cell.j, huPlayer);
+            ai.RemoveMove(cell.i, cell.j);
 
-            ai.RemoveMove(e.RowIndex, e.ColumnIndex);
+            grid[lastMove.i, lastMove.j].button.BackColor = Color.Transparent;
 
             Game();
         }
@@ -187,12 +170,18 @@ namespace Gomoku {
         }
 
         void showWinCells(int i, int j, int istep, int jstep, int iscale = 1, int jscale = 1) {
-            grid.ClearSelection();
-
             for (int k = 0; k < winCount; k++) {
-                grid[j + jstep + k * jscale, i + istep + k * iscale].Style.BackColor = Color.Orange;
-                grid[j + jstep + k * jscale, i + istep + k * iscale].Style.ForeColor = Color.White;
+                grid[i + istep + k * iscale, j + jstep + k * jscale].button.BackColor = Color.Orange;
+                grid[i + istep + k * iscale, j + jstep + k * jscale].button.ForeColor = Color.White;
             }
+        }
+
+        void showInfo() {
+            totalLabel.Text = "Всего игр: " + totals;
+            winsLabel.Text = "Побед: " + wins;
+            lossLabel.Text = "Поражений: " + loss;
+            levelLabel.Text = "Уровень: " + Settings.Default.level;
+            complexityLabel.Text = "Сложность: " + complexity;
         }
 
         void GameOver(Player player, int status) {
@@ -237,10 +226,7 @@ namespace Gomoku {
                 }
             }
 
-            winsLabel.Text = "Побед: " + wins + " / " + totals;
-            lossLabel.Text = "Поражений: " + loss + " / " + totals;
-            levelLabel.Text = "Уровень: " + Settings.Default.level + " / " + levels;
-            complexityLabel.Text = "Сложность: " + (int)(complexity * 100) + "%";
+            showInfo();
 
             if (status == noWinners) {
                 result = MessageBox.Show("Желаете повторить игру?", "Ничья!", MessageBoxButtons.YesNo);
@@ -263,6 +249,7 @@ namespace Gomoku {
 
         void Game() {
             gameBoard.Draw(grid);
+
             int status;
 
             if ((status = isGameOver(huPlayer)) != notGameOver) {
@@ -270,15 +257,25 @@ namespace Gomoku {
                 return;
             }
 
-            grid[lastMove.j, lastMove.i].Style.BackColor = Settings.Default.BoardBackColor;
+            playerLabel.Text = aiPlayer.character;
+            playerLabel.ForeColor = aiPlayer.color;
+            playerLabel.Update();
 
             lastMove = ai.MakeMove(ref gameBoard, aiPlayer, huPlayer, aiPlayer, complexity);
             gameBoard.Draw(grid);
 
-            grid[lastMove.j, lastMove.i].Style.BackColor = Settings.Default.AImoveBackColor;
-            
+            grid[lastMove.i, lastMove.j].button.BackColor = Settings.Default.AImoveBackColor;
+            grid[lastMove.i, lastMove.j].button.Update();
+            System.Threading.Thread.Sleep(150);
+            grid[lastMove.i, lastMove.j].button.BackColor = Color.Transparent;
+            grid[lastMove.i, lastMove.j].button.Update();
+            System.Threading.Thread.Sleep(150);
+            grid[lastMove.i, lastMove.j].button.BackColor = Settings.Default.AImoveBackColor;
+            grid[lastMove.i, lastMove.j].button.Update();
+
             playerLabel.Text = huPlayer.character;
             playerLabel.ForeColor = huPlayer.color;
+            playerLabel.Update();
 
             if ((status = isGameOver(aiPlayer)) != notGameOver)
                 GameOver(aiPlayer, status);
@@ -302,10 +299,6 @@ namespace Gomoku {
                 isUserFirst = !isUserFirst;
                 InitGame();
             }
-            else {
-                FormClosing -= MainForm_FormClosing;
-                Close();
-            }
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
@@ -315,13 +308,13 @@ namespace Gomoku {
         private void resetProgressMenuItem_Click(object sender, EventArgs e) {
             if (MessageBox.Show("Вы уверены, что хотите сбросить прогресс и вернуться на 1 уровень?\nВнимание, игра начнётся заново!", "Требуется подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
-
+            
             winsPerLevel = 0;
             lossPerLevel = 0;
             totals = 0;
             wins = 0;
             loss = 0;
-
+            
             Settings.Default.level = 1;
             Settings.Default.Save();
 
