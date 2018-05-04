@@ -65,12 +65,15 @@ namespace Gomoku {
             lostCells--;
         }
 
-        public void Draw(Grid grid) {
+        public void Draw(Grid grid, bool update = false) {
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < m; j++) {
                     grid[i, j].button.Text = board[i, j].value;
                     grid[i, j].button.ForeColor = board[i, j].color;
                     grid[i, j].button.BackColor = Color.Transparent;
+
+                    if (update)
+                        grid[i, j].button.Update();
                 }
             }
         }

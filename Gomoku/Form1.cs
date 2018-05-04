@@ -5,8 +5,6 @@ using Gomoku.Properties;
 
 namespace Gomoku {
     public partial class MainForm : Form {
-        const int boardWidth = 15; // ширина игрового поля
-        const int boardHeight = 15; // высота игрового поля
         const int winCount = 5; // нужно собрать 5 в ряд
 
         const double maxComplexity = 1; // максимальная сложность игры
@@ -44,7 +42,7 @@ namespace Gomoku {
         double complexity;
 
         void InitGrid() {
-            grid = new Grid(boardWidth, boardHeight, Settings.Default.CellSize, new Point(12, 80), this);
+            grid = new Grid(Settings.Default.BoardWidth, Settings.Default.BoardHeight, Settings.Default.CellSize, new Point(12, 80), this);
             grid.cellClick += huStep;
 
             MinimumSize = new Size(grid.size.Width + 300, grid.size.Height + 130);
@@ -68,14 +66,14 @@ namespace Gomoku {
         }
 
         void InitGame() {
-            gameBoard = new Board(boardHeight, boardWidth);
-            ai = new GomokuAI(boardHeight, boardWidth, isUserFirst);
+            gameBoard = new Board(Settings.Default.BoardHeight, Settings.Default.BoardWidth);
+            ai = new GomokuAI(Settings.Default.BoardHeight, Settings.Default.BoardWidth, isUserFirst);
 
             huPlayer = isUserFirst ? player1 : player2;
             aiPlayer = isUserFirst ? player2 : player1;
 
             if (!isUserFirst)
-                gameBoard.SetStep(boardHeight / 2, boardWidth / 2, aiPlayer);
+                gameBoard.SetStep(Settings.Default.BoardHeight / 2, Settings.Default.BoardWidth / 2, aiPlayer);
 
             isUserFirst = !isUserFirst;
             complexity = minComplexity + (Settings.Default.level - 1) * complexityStep;
@@ -103,8 +101,8 @@ namespace Gomoku {
         }
 
         bool isWin(Board gameBoard, Player player) {
-            for (int j = 0; j < boardWidth; j++) {
-                for (int i = 0; i <= boardHeight - winCount; i++) {
+            for (int j = 0; j < Settings.Default.BoardWidth; j++) {
+                for (int i = 0; i <= Settings.Default.BoardHeight - winCount; i++) {
                     int k = 0;
 
                     while (k < winCount && gameBoard.IsPlayerCell(i + k, j, player))
@@ -117,8 +115,8 @@ namespace Gomoku {
                 }
             }
 
-            for (int i = 0; i < boardHeight; i++) {
-                for (int j = 0; j <= boardWidth - winCount; j++) {
+            for (int i = 0; i < Settings.Default.BoardHeight; i++) {
+                for (int j = 0; j <= Settings.Default.BoardWidth - winCount; j++) {
                     int k = 0;
 
                     while (k < winCount && gameBoard.IsPlayerCell(i, j + k, player))
@@ -131,8 +129,8 @@ namespace Gomoku {
                 }
             }
 
-            for (int i = 0; i <= boardHeight - winCount; i++) {
-                for (int j = 0; j <= boardWidth - winCount; j++) {
+            for (int i = 0; i <= Settings.Default.BoardHeight - winCount; i++) {
+                for (int j = 0; j <= Settings.Default.BoardWidth - winCount; j++) {
                     int k = 0;
 
                     while (k < winCount && gameBoard.IsPlayerCell(i + k, j + k, player))
@@ -145,8 +143,8 @@ namespace Gomoku {
                 }
             }
 
-            for (int i = boardHeight - 1; i >= winCount - 1; i--) {
-                for (int j = winCount - 1; j < boardWidth; j++) {
+            for (int i = Settings.Default.BoardHeight - 1; i >= winCount - 1; i--) {
+                for (int j = winCount - 1; j < Settings.Default.BoardWidth; j++) {
                     int k = 0;
 
                     while (k < winCount && gameBoard.IsPlayerCell(i - k, j - winCount + 1 + k, player))
@@ -248,7 +246,7 @@ namespace Gomoku {
         }
 
         void Game() {
-            gameBoard.Draw(grid);
+            gameBoard.Draw(grid, true);
 
             int status;
 
@@ -281,16 +279,10 @@ namespace Gomoku {
                 GameOver(aiPlayer, status);
         }
 
-        public MainForm() {
-            InitializeComponent();
-            InitGrid();
-            InitGame();
-        }
-
         private void ExitMenuItem_Click(object sender, EventArgs e) {
-            if (MessageBox.Show("Вы уверены, что хотите выйти?", "Требуется подтверждение закрытия", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+            if (MessageBox.Show("Вы уверены, что хотите выйти из игры?", "Требуется подтверждение", MessageBoxButtons.YesNo) == DialogResult.Yes) {
                 FormClosing -= MainForm_FormClosing;
-                Close();
+                Environment.Exit(0);
             }
         }
 
@@ -319,6 +311,19 @@ namespace Gomoku {
             Settings.Default.Save();
 
             isUserFirst = !isUserFirst;
+            InitGame();
+        }
+
+        private void menuExitMenuItem_Click(object sender, EventArgs e) {
+            if (MessageBox.Show("Вы уверены, что хотите выйти в меню?", "Требуется подтверждение", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+                FormClosing -= MainForm_FormClosing;
+                Close();
+            }
+        }
+
+        public MainForm() {
+            InitializeComponent();
+            InitGrid();
             InitGame();
         }
     }

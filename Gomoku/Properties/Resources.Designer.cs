@@ -63,6 +63,16 @@ namespace Gomoku.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap gomoku {
+            get {
+                object obj = ResourceManager.GetObject("gomoku", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap wood {
             get {
                 object obj = ResourceManager.GetObject("wood", resourceCulture);

@@ -27,9 +27,12 @@
             this.winsLabel = new System.Windows.Forms.Label();
             this.lossLabel = new System.Windows.Forms.Label();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.optionsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gameMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RestartMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetProgressMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gameNameLabel = new System.Windows.Forms.Label();
             this.levelLabel = new System.Windows.Forms.Label();
             this.complexityLabel = new System.Windows.Forms.Label();
@@ -68,39 +71,59 @@
             // menuStrip
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.RestartMenuItem,
-            this.resetProgressMenuItem,
-            this.ExitMenuItem});
+            this.optionsMenuItem,
+            this.gameMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(769, 24);
             this.menuStrip.TabIndex = 4;
             this.menuStrip.Text = "menuStrip1";
             // 
+            // optionsMenuItem
+            // 
+            this.optionsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuExitMenuItem,
+            this.ExitMenuItem});
+            this.optionsMenuItem.Name = "optionsMenuItem";
+            this.optionsMenuItem.Size = new System.Drawing.Size(56, 20);
+            this.optionsMenuItem.Text = "Опции";
+            // 
+            // menuExitMenuItem
+            // 
+            this.menuExitMenuItem.Name = "menuExitMenuItem";
+            this.menuExitMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.menuExitMenuItem.Text = "Выйти в меню";
+            this.menuExitMenuItem.Click += new System.EventHandler(this.menuExitMenuItem_Click);
+            // 
+            // ExitMenuItem
+            // 
+            this.ExitMenuItem.Name = "ExitMenuItem";
+            this.ExitMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.ExitMenuItem.Text = "Выйти";
+            this.ExitMenuItem.Click += new System.EventHandler(this.ExitMenuItem_Click);
+            // 
+            // gameMenuItem
+            // 
+            this.gameMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.RestartMenuItem,
+            this.resetProgressMenuItem});
+            this.gameMenuItem.Name = "gameMenuItem";
+            this.gameMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.gameMenuItem.Text = "Игра";
+            // 
             // RestartMenuItem
             // 
             this.RestartMenuItem.Name = "RestartMenuItem";
-            this.RestartMenuItem.ShortcutKeyDisplayString = "ctrl+R";
-            this.RestartMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.RestartMenuItem.Size = new System.Drawing.Size(144, 20);
+            this.RestartMenuItem.Size = new System.Drawing.Size(199, 22);
             this.RestartMenuItem.Text = "Начать партию заново";
             this.RestartMenuItem.Click += new System.EventHandler(this.RestartMenuItem_Click);
             // 
             // resetProgressMenuItem
             // 
             this.resetProgressMenuItem.Name = "resetProgressMenuItem";
-            this.resetProgressMenuItem.Size = new System.Drawing.Size(126, 20);
+            this.resetProgressMenuItem.Size = new System.Drawing.Size(199, 22);
             this.resetProgressMenuItem.Text = "Сбросить прогресс";
             this.resetProgressMenuItem.Click += new System.EventHandler(this.resetProgressMenuItem_Click);
-            // 
-            // ExitMenuItem
-            // 
-            this.ExitMenuItem.Name = "ExitMenuItem";
-            this.ExitMenuItem.ShortcutKeyDisplayString = "ctrl+Q";
-            this.ExitMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.ExitMenuItem.Size = new System.Drawing.Size(53, 20);
-            this.ExitMenuItem.Text = "Выход";
-            this.ExitMenuItem.Click += new System.EventHandler(this.ExitMenuItem_Click);
             // 
             // gameNameLabel
             // 
@@ -234,9 +257,6 @@
         private System.Windows.Forms.Label winsLabel;
         private System.Windows.Forms.Label lossLabel;
         private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem RestartMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem resetProgressMenuItem;
         private System.Windows.Forms.Label gameNameLabel;
         private System.Windows.Forms.Label levelLabel;
         private System.Windows.Forms.Label complexityLabel;
@@ -245,6 +265,12 @@
         private System.Windows.Forms.Label totalLabel;
         private System.Windows.Forms.Label currMoveLabel;
         private System.Windows.Forms.Label playerLabel;
+        private System.Windows.Forms.ToolStripMenuItem gameMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem RestartMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem menuExitMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resetProgressMenuItem;
     }
 }
 
