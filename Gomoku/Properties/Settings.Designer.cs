@@ -94,5 +94,29 @@ namespace Gomoku.Properties {
                 this["BoardHeight"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int winsPerLevel {
+            get {
+                return ((int)(this["winsPerLevel"]));
+            }
+            set {
+                this["winsPerLevel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int lossPerLevel {
+            get {
+                return ((int)(this["lossPerLevel"]));
+            }
+            set {
+                this["lossPerLevel"] = value;
+            }
+        }
     }
 }

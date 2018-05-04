@@ -41,6 +41,9 @@
             this.totalLabel = new System.Windows.Forms.Label();
             this.currMoveLabel = new System.Windows.Forms.Label();
             this.playerLabel = new System.Windows.Forms.Label();
+            this.progressLabel = new System.Windows.Forms.Label();
+            this.winsPerLevelLabel = new System.Windows.Forms.Label();
+            this.lossPerLevelLabel = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -203,7 +206,7 @@
             this.currMoveLabel.BackColor = System.Drawing.Color.Transparent;
             this.currMoveLabel.Font = new System.Drawing.Font("Arkhip", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.currMoveLabel.ForeColor = System.Drawing.Color.White;
-            this.currMoveLabel.Location = new System.Drawing.Point(537, 253);
+            this.currMoveLabel.Location = new System.Drawing.Point(537, 301);
             this.currMoveLabel.Name = "currMoveLabel";
             this.currMoveLabel.Size = new System.Drawing.Size(163, 23);
             this.currMoveLabel.TabIndex = 11;
@@ -215,11 +218,47 @@
             this.playerLabel.BackColor = System.Drawing.Color.Transparent;
             this.playerLabel.Font = new System.Drawing.Font("Arkhip", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.playerLabel.ForeColor = System.Drawing.Color.White;
-            this.playerLabel.Location = new System.Drawing.Point(700, 253);
+            this.playerLabel.Location = new System.Drawing.Point(700, 301);
             this.playerLabel.Name = "playerLabel";
             this.playerLabel.Size = new System.Drawing.Size(38, 23);
             this.playerLabel.TabIndex = 12;
             this.playerLabel.Text = "hu";
+            // 
+            // progressLabel
+            // 
+            this.progressLabel.AutoSize = true;
+            this.progressLabel.BackColor = System.Drawing.Color.Transparent;
+            this.progressLabel.Font = new System.Drawing.Font("Arkhip", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.progressLabel.ForeColor = System.Drawing.Color.White;
+            this.progressLabel.Location = new System.Drawing.Point(537, 254);
+            this.progressLabel.Name = "progressLabel";
+            this.progressLabel.Size = new System.Drawing.Size(122, 23);
+            this.progressLabel.TabIndex = 13;
+            this.progressLabel.Text = "Прогресс: ";
+            // 
+            // winsPerLevelLabel
+            // 
+            this.winsPerLevelLabel.AutoSize = true;
+            this.winsPerLevelLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
+            this.winsPerLevelLabel.Font = new System.Drawing.Font("Arkhip", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.winsPerLevelLabel.ForeColor = System.Drawing.Color.White;
+            this.winsPerLevelLabel.Location = new System.Drawing.Point(660, 254);
+            this.winsPerLevelLabel.Name = "winsPerLevelLabel";
+            this.winsPerLevelLabel.Size = new System.Drawing.Size(24, 23);
+            this.winsPerLevelLabel.TabIndex = 14;
+            this.winsPerLevelLabel.Text = "0";
+            // 
+            // lossPerLevelLabel
+            // 
+            this.lossPerLevelLabel.AutoSize = true;
+            this.lossPerLevelLabel.BackColor = System.Drawing.Color.Red;
+            this.lossPerLevelLabel.Font = new System.Drawing.Font("Arkhip", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lossPerLevelLabel.ForeColor = System.Drawing.Color.White;
+            this.lossPerLevelLabel.Location = new System.Drawing.Point(704, 254);
+            this.lossPerLevelLabel.Name = "lossPerLevelLabel";
+            this.lossPerLevelLabel.Size = new System.Drawing.Size(24, 23);
+            this.lossPerLevelLabel.TabIndex = 15;
+            this.lossPerLevelLabel.Text = "0";
             // 
             // MainForm
             // 
@@ -227,6 +266,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(769, 548);
+            this.Controls.Add(this.lossPerLevelLabel);
+            this.Controls.Add(this.winsPerLevelLabel);
+            this.Controls.Add(this.progressLabel);
             this.Controls.Add(this.playerLabel);
             this.Controls.Add(this.currMoveLabel);
             this.Controls.Add(this.totalLabel);
@@ -271,6 +313,9 @@
         private System.Windows.Forms.ToolStripMenuItem menuExitMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resetProgressMenuItem;
+        private System.Windows.Forms.Label progressLabel;
+        private System.Windows.Forms.Label winsPerLevelLabel;
+        private System.Windows.Forms.Label lossPerLevelLabel;
     }
 }
 

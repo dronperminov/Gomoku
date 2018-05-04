@@ -5,6 +5,12 @@ using Gomoku.Properties;
 
 namespace Gomoku {
     public partial class MainForm : Form {
+        enum GameStatus {
+            notGameOver = -1, // не конец игры
+            noWinners = 0, // нет победителя (ничья)
+            winner = 1 // есть победитель
+        }
+
         const int winCount = 5; // нужно собрать 5 в ряд
 
         const double maxComplexity = 1; // максимальная сложность игры
@@ -14,10 +20,6 @@ namespace Gomoku {
         const int levels = (int) ((maxComplexity - minComplexity) / complexityStep);
         const int winsForLevelUp = 7; // победных игр для перехода на новый уровень
         const int lossForLevelDown = 7; // поражений для уменьшения уровня
-
-        const int winner = 1; // есть победитель
-        const int noWinners = 0; // нет победителя (ничья)
-        const int notGameOver = -1; // не конец игры
 
         static readonly Player player1 = new Player("X", Color.White); // первый игрок: красный крестик
         static readonly Player player2 = new Player("O", Color.Black); // второй игрок: чёрный нолик
@@ -36,33 +38,37 @@ namespace Gomoku {
         int totals = 0; // общее число игр
         int loss = 0; // количество проигрышей
 
-        int winsPerLevel = 0; // выигрышей человека за уровень
-        int lossPerLevel = 0; // проигрышей человека за уровень
-
         double complexity;
 
         void InitGrid() {
             grid = new Grid(Settings.Default.BoardWidth, Settings.Default.BoardHeight, Settings.Default.CellSize, new Point(12, 80), this);
             grid.cellClick += huStep;
 
-            MinimumSize = new Size(grid.size.Width + 300, grid.size.Height + 130);
+            Size gridSize = grid.GetSize();
+            Point gridLocation = grid.GetLocation();
+
+            MinimumSize = new Size(gridSize.Width + 300, gridSize.Height + 130);
             Height = MinimumSize.Height;
             Width = MinimumSize.Width;
 
             gameNameLabel.Location = new Point((Width - gameNameLabel.Width) / 2, gameNameLabel.Location.Y);
 
-            totalLabel.Location = new Point(grid.location.X + grid.size.Width + 20, grid.location.Y);
-            winsLabel.Location = new Point(grid.location.X + grid.size.Width + 20, grid.location.Y + 25);
-            lossLabel.Location = new Point(grid.location.X + grid.size.Width + 20, grid.location.Y + 50);
+            totalLabel.Location = new Point(gridLocation.X + gridSize.Width + 20, gridLocation.Y);
+            winsLabel.Location = new Point(gridLocation.X + gridSize.Width + 20, gridLocation.Y + 25);
+            lossLabel.Location = new Point(gridLocation.X + gridSize.Width + 20, gridLocation.Y + 50);
 
-            levelLabel.Location = new Point(grid.location.X + grid.size.Width + 20, grid.location.Y + 75);
-            complexityLabel.Location = new Point(grid.location.X + grid.size.Width + 20, grid.location.Y + 100);
+            levelLabel.Location = new Point(gridLocation.X + gridSize.Width + 20, gridLocation.Y + 75);
+            complexityLabel.Location = new Point(gridLocation.X + gridSize.Width + 20, gridLocation.Y + 100);
 
-            currMoveLabel.Location = new Point(grid.location.X + grid.size.Width + 20, grid.location.Y + 150);
-            playerLabel.Location = new Point(grid.location.X + grid.size.Width + 20 + currMoveLabel.Width, grid.location.Y + 150);
+            progressLabel.Location = new Point(gridLocation.X + gridSize.Width + 20, gridLocation.Y + 125);
+            winsPerLevelLabel.Location = new Point(gridLocation.X + gridSize.Width + progressLabel.Width + 20, gridLocation.Y + 125);
+            lossPerLevelLabel.Location = new Point(gridLocation.X + gridSize.Width + progressLabel.Width + winsPerLevelLabel.Width + 30, gridLocation.Y + 125);
 
-            rulesHeadlineLabel.Location = new Point(grid.location.X + grid.size.Width + 20 + (rulesLabel.Width  - rulesHeadlineLabel.Width) / 2, grid.location.Y + grid.size.Height - rulesLabel.Height - 20);
-            rulesLabel.Location = new Point(grid.location.X + grid.size.Width + 20, grid.location.Y + grid.size.Height - rulesLabel.Height);
+            currMoveLabel.Location = new Point(gridLocation.X + gridSize.Width + 20, gridLocation.Y + 175);
+            playerLabel.Location = new Point(gridLocation.X + gridSize.Width + 20 + currMoveLabel.Width, gridLocation.Y + 175);
+
+            rulesHeadlineLabel.Location = new Point(gridLocation.X + gridSize.Width + 20 + (rulesLabel.Width - rulesHeadlineLabel.Width) / 2, gridLocation.Y + gridSize.Height - rulesLabel.Height - 20);
+            rulesLabel.Location = new Point(gridLocation.X + gridSize.Width + 20, gridLocation.Y + gridSize.Height - rulesLabel.Height);
         }
 
         void InitGame() {
@@ -160,11 +166,11 @@ namespace Gomoku {
             return false;
         }
 
-        int isGameOver(Player player) {
+        GameStatus isGameOver(Player player) {
             if (isWin(gameBoard, player))
-                return winner;
+                return GameStatus.winner;
 
-            return gameBoard.GetLostCells() == 0 ? noWinners : notGameOver;
+            return gameBoard.GetLostCells() == 0 ? GameStatus.noWinners : GameStatus.notGameOver;
         }
 
         void showWinCells(int i, int j, int istep, int jstep, int iscale = 1, int jscale = 1) {
@@ -180,31 +186,33 @@ namespace Gomoku {
             lossLabel.Text = "Поражений: " + loss;
             levelLabel.Text = "Уровень: " + Settings.Default.level;
             complexityLabel.Text = "Сложность: " + complexity;
+
+            winsPerLevelLabel.Text = Settings.Default.winsPerLevel.ToString();
+            lossPerLevelLabel.Text = Settings.Default.lossPerLevel.ToString();
         }
 
-        void GameOver(Player player, int status) {
+        void GameOver(Player player, GameStatus status) {
             DialogResult result = DialogResult.No;
 
             totals++;
 
-            if (status != noWinners) {
+            if (status != GameStatus.noWinners) {
                 if (player == huPlayer) {
                     wins++;
-                    winsPerLevel++;
+                    Settings.Default.winsPerLevel++;
                 }
                 else {
                     loss++;
-                    lossPerLevel++;
+                    Settings.Default.lossPerLevel++;
                 }
             }
 
-            if (winsPerLevel > 0 && winsPerLevel % winsForLevelUp == 0) {
-                winsPerLevel = 0;
-                lossPerLevel = 0;
+            if (Settings.Default.winsPerLevel > 0 && Settings.Default.winsPerLevel % winsForLevelUp == 0) {
+                Settings.Default.winsPerLevel = 0;
+                Settings.Default.lossPerLevel = 0;
 
                 if (Settings.Default.level < levels) {
                     Settings.Default.level++;
-                    Settings.Default.Save();
 
                     MessageBox.Show("Поздравляю, Вы одержали победу " + lossForLevelDown + " раз за этот уровень. ", "Уровень был повышен на 1");
                 }
@@ -212,21 +220,22 @@ namespace Gomoku {
                     MessageBox.Show("Ура! Игра пройдена! Поздравляем!", "Игра окончена");
                 }
             }
-            else if (lossPerLevel > 0 && lossPerLevel % lossForLevelDown == 0) {
-                winsPerLevel = 0;
-                lossPerLevel = 0;
+            else if (Settings.Default.lossPerLevel > 0 && Settings.Default.lossPerLevel % lossForLevelDown == 0) {
+                Settings.Default.winsPerLevel = 0;
+                Settings.Default.lossPerLevel = 0;
 
                 if (Settings.Default.level > 1) {
                     Settings.Default.level--;
-                    Settings.Default.Save();
 
                     MessageBox.Show("К сожалению, Вы потерпели поражение " + lossForLevelDown + " раз за этот уровень. ", "Уровень был понижен на 1");
                 }
             }
 
+            Settings.Default.Save();
+
             showInfo();
 
-            if (status == noWinners) {
+            if (status == GameStatus.noWinners) {
                 result = MessageBox.Show("Желаете повторить игру?", "Ничья!", MessageBoxButtons.YesNo);
             }
             else if (player == huPlayer) {
@@ -248,9 +257,9 @@ namespace Gomoku {
         void Game() {
             gameBoard.Draw(grid, true);
 
-            int status;
+            GameStatus status;
 
-            if ((status = isGameOver(huPlayer)) != notGameOver) {
+            if ((status = isGameOver(huPlayer)) != GameStatus.notGameOver) {
                 GameOver(huPlayer, status);
                 return;
             }
@@ -275,7 +284,7 @@ namespace Gomoku {
             playerLabel.ForeColor = huPlayer.color;
             playerLabel.Update();
 
-            if ((status = isGameOver(aiPlayer)) != notGameOver)
+            if ((status = isGameOver(aiPlayer)) != GameStatus.notGameOver)
                 GameOver(aiPlayer, status);
         }
 
@@ -300,17 +309,17 @@ namespace Gomoku {
         private void resetProgressMenuItem_Click(object sender, EventArgs e) {
             if (MessageBox.Show("Вы уверены, что хотите сбросить прогресс и вернуться на 1 уровень?\nВнимание, игра начнётся заново!", "Требуется подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
-            
-            winsPerLevel = 0;
-            lossPerLevel = 0;
+
             totals = 0;
             wins = 0;
             loss = 0;
             
             Settings.Default.level = 1;
+            Settings.Default.winsPerLevel = 0;
+            Settings.Default.lossPerLevel = 0;
             Settings.Default.Save();
 
-            isUserFirst = !isUserFirst;
+            isUserFirst = true;
             InitGame();
         }
 

@@ -16,8 +16,8 @@ namespace Gomoku {
         public readonly int height; // высота поля
         int cellSize; // размер клетки
 
-        public readonly Size size;
-        public readonly Point location;
+        Size size;
+        Point location;
 
         public event CellClick cellClick;
         public delegate void CellClick(object sender, EventArgs eventArgs);
@@ -74,6 +74,14 @@ namespace Gomoku {
         public GridCell this[int i, int j] {
             get { return values[i, j]; }
             set { values[i, j] = value; }
+        }
+
+        public Size GetSize() {
+            return size;
+        }
+
+        public Point GetLocation() {
+            return location;
         }
     }
 }
