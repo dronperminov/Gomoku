@@ -28,11 +28,15 @@
             this.lossLabel = new System.Windows.Forms.Label();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.optionsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetProgressMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cancelMoveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gameMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.RestartMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.resetProgressMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeModeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.careerModeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.certainLevelModeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectLevelBox = new System.Windows.Forms.ToolStripComboBox();
+            this.friendToFriendModeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gameNameLabel = new System.Windows.Forms.Label();
             this.levelLabel = new System.Windows.Forms.Label();
             this.complexityLabel = new System.Windows.Forms.Label();
@@ -75,7 +79,7 @@
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionsMenuItem,
-            this.gameMenuItem});
+            this.changeModeMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(769, 24);
@@ -85,48 +89,91 @@
             // optionsMenuItem
             // 
             this.optionsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.resetProgressMenuItem,
+            this.cancelMoveMenuItem,
             this.menuExitMenuItem,
             this.ExitMenuItem});
             this.optionsMenuItem.Name = "optionsMenuItem";
             this.optionsMenuItem.Size = new System.Drawing.Size(56, 20);
             this.optionsMenuItem.Text = "Опции";
             // 
+            // resetProgressMenuItem
+            // 
+            this.resetProgressMenuItem.Name = "resetProgressMenuItem";
+            this.resetProgressMenuItem.ShortcutKeyDisplayString = "Ctrl+Alt+R";
+            this.resetProgressMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.R)));
+            this.resetProgressMenuItem.Size = new System.Drawing.Size(245, 22);
+            this.resetProgressMenuItem.Text = "Сбросить прогресс";
+            this.resetProgressMenuItem.Click += new System.EventHandler(this.resetProgressMenuItem_Click);
+            // 
+            // cancelMoveMenuItem
+            // 
+            this.cancelMoveMenuItem.Name = "cancelMoveMenuItem";
+            this.cancelMoveMenuItem.ShortcutKeyDisplayString = "Ctrl+Z";
+            this.cancelMoveMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
+            this.cancelMoveMenuItem.Size = new System.Drawing.Size(245, 22);
+            this.cancelMoveMenuItem.Text = "Отменить ход";
+            this.cancelMoveMenuItem.Click += new System.EventHandler(this.cancelMoveMenuItem_Click);
+            // 
             // menuExitMenuItem
             // 
             this.menuExitMenuItem.Name = "menuExitMenuItem";
-            this.menuExitMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.menuExitMenuItem.ShortcutKeyDisplayString = "Ctrl+M";
+            this.menuExitMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            this.menuExitMenuItem.Size = new System.Drawing.Size(245, 22);
             this.menuExitMenuItem.Text = "Выйти в меню";
             this.menuExitMenuItem.Click += new System.EventHandler(this.menuExitMenuItem_Click);
             // 
             // ExitMenuItem
             // 
             this.ExitMenuItem.Name = "ExitMenuItem";
-            this.ExitMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.ExitMenuItem.ShortcutKeyDisplayString = "Ctrl+Q";
+            this.ExitMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+            this.ExitMenuItem.Size = new System.Drawing.Size(245, 22);
             this.ExitMenuItem.Text = "Выйти";
             this.ExitMenuItem.Click += new System.EventHandler(this.ExitMenuItem_Click);
             // 
-            // gameMenuItem
+            // changeModeMenuItem
             // 
-            this.gameMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.RestartMenuItem,
-            this.resetProgressMenuItem});
-            this.gameMenuItem.Name = "gameMenuItem";
-            this.gameMenuItem.Size = new System.Drawing.Size(46, 20);
-            this.gameMenuItem.Text = "Игра";
+            this.changeModeMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.careerModeMenuItem,
+            this.certainLevelModeMenuItem,
+            this.friendToFriendModeMenuItem});
+            this.changeModeMenuItem.Name = "changeModeMenuItem";
+            this.changeModeMenuItem.Size = new System.Drawing.Size(108, 20);
+            this.changeModeMenuItem.Text = "Сменить режим";
             // 
-            // RestartMenuItem
+            // careerModeMenuItem
             // 
-            this.RestartMenuItem.Name = "RestartMenuItem";
-            this.RestartMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.RestartMenuItem.Text = "Начать партию заново";
-            this.RestartMenuItem.Click += new System.EventHandler(this.RestartMenuItem_Click);
+            this.careerModeMenuItem.Name = "careerModeMenuItem";
+            this.careerModeMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.careerModeMenuItem.Text = "Карьера";
+            this.careerModeMenuItem.Click += new System.EventHandler(this.careerModeMenuItem_Click);
             // 
-            // resetProgressMenuItem
+            // certainLevelModeMenuItem
             // 
-            this.resetProgressMenuItem.Name = "resetProgressMenuItem";
-            this.resetProgressMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.resetProgressMenuItem.Text = "Сбросить прогресс";
-            this.resetProgressMenuItem.Click += new System.EventHandler(this.resetProgressMenuItem_Click);
+            this.certainLevelModeMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.selectLevelBox});
+            this.certainLevelModeMenuItem.Name = "certainLevelModeMenuItem";
+            this.certainLevelModeMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.certainLevelModeMenuItem.Text = "Конкретный уровень";
+            // 
+            // selectLevelBox
+            // 
+            this.selectLevelBox.BackColor = System.Drawing.Color.White;
+            this.selectLevelBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.selectLevelBox.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
+            this.selectLevelBox.Name = "selectLevelBox";
+            this.selectLevelBox.Size = new System.Drawing.Size(121, 23);
+            this.selectLevelBox.SelectedIndexChanged += new System.EventHandler(this.selectLevelBox_SelectedIndexChanged);
+            // 
+            // friendToFriendModeMenuItem
+            // 
+            this.friendToFriendModeMenuItem.Name = "friendToFriendModeMenuItem";
+            this.friendToFriendModeMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.friendToFriendModeMenuItem.Text = "Друг против друга";
+            this.friendToFriendModeMenuItem.Click += new System.EventHandler(this.friendToFriendModeMenuItem_Click);
             // 
             // gameNameLabel
             // 
@@ -307,15 +354,19 @@
         private System.Windows.Forms.Label totalLabel;
         private System.Windows.Forms.Label currMoveLabel;
         private System.Windows.Forms.Label playerLabel;
-        private System.Windows.Forms.ToolStripMenuItem gameMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem RestartMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuExitMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem resetProgressMenuItem;
         private System.Windows.Forms.Label progressLabel;
         private System.Windows.Forms.Label winsPerLevelLabel;
         private System.Windows.Forms.Label lossPerLevelLabel;
+        private System.Windows.Forms.ToolStripMenuItem changeModeMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem careerModeMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem certainLevelModeMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem friendToFriendModeMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resetProgressMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cancelMoveMenuItem;
+        private System.Windows.Forms.ToolStripComboBox selectLevelBox;
     }
 }
 

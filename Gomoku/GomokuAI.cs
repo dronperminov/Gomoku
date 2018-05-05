@@ -86,6 +86,10 @@ namespace Gomoku {
             }
         }
 
+        public void AddMove(int i0, int j0) {
+            availableMoves.Add(new Move(i0, j0));
+        }
+
         string[] getLines(int i0, int j0, int radius, Player player, Board board) {
             string[] lines = new string[4];
 

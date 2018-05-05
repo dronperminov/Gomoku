@@ -19,9 +19,14 @@ namespace Gomoku {
         }
     }
 
-    struct BoardCell {
-        public string value;
-        public Color color;
+    class BoardCell {
+        public readonly string value;
+        public readonly Color color;
+
+        public BoardCell() {
+            value = "";
+            color = Color.Black;
+        }
 
         public BoardCell(string value, Color color) {
             this.value = value;
@@ -59,8 +64,7 @@ namespace Gomoku {
         }
 
         public void SetStep(int i, int j, Player player) {
-            board[i, j].value = player.character;
-            board[i, j].color = player.color;
+            board[i, j] = new BoardCell(player.character, player.color);
 
             lostCells--;
         }

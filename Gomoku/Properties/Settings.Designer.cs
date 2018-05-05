@@ -118,5 +118,26 @@ namespace Gomoku.Properties {
                 this["lossPerLevel"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int maxCancelMoves {
+            get {
+                return ((int)(this["maxCancelMoves"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int lastSelectedLevel {
+            get {
+                return ((int)(this["lastSelectedLevel"]));
+            }
+            set {
+                this["lastSelectedLevel"] = value;
+            }
+        }
     }
 }
