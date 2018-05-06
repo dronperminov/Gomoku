@@ -13,9 +13,9 @@ namespace Gomoku {
 
         // режимы игры
         enum GameMode {
-            career, // карьера - постепенное увеличение уровня
-            certainLevel, // игра на конкретном уровне
-            friendWithFriend // человек против человека
+            career = 0, // карьера - постепенное увеличение уровня
+            certainLevel = 1, // игра на конкретном уровне
+            friendWithFriend = 2 // человек против человека
         }
 
         const int winCount = 5; // нужно собрать 5 в ряд
@@ -39,7 +39,7 @@ namespace Gomoku {
 
         Grid grid = null;
         Board gameBoard = null; // игровая доска
-        GameMode gameMode = GameMode.career; // текущий режим игры
+        GameMode gameMode; // текущий режим игры
         GomokuAI ai = null; // компьютерный алгоритм обсчёта
         Move lastAIMove; // последний ход, сделанный AI
         Move lastHuMove; // последний ход, сделанный человеком
@@ -88,6 +88,8 @@ namespace Gomoku {
 
             for (int i = 1; i <= levels; i++)
                 selectLevelBox.Items.Add("Уровень " + i);
+
+            gameMode = (GameMode) Settings.Default.lastGameMode;
         }
 
         void InitGame(GameMode mode) {
@@ -95,6 +97,7 @@ namespace Gomoku {
 
             resetProgressMenuItem.Visible = (mode == GameMode.career);
             cancelMoveMenuItem.Visible = (mode == GameMode.career || mode == GameMode.certainLevel);
+            cancelMoveMenuItem.Enabled = false;
             progressLabel.Visible = (mode == GameMode.career);
             levelLabel.Visible = (mode == GameMode.career || mode == GameMode.certainLevel);
             complexityLabel.Visible = (mode == GameMode.career || mode == GameMode.certainLevel);
@@ -104,6 +107,10 @@ namespace Gomoku {
             selectLevelBox.SelectedIndexChanged -= selectLevelBox_SelectedIndexChanged;
             selectLevelBox.SelectedIndex = Settings.Default.lastSelectedLevel - 1;
             selectLevelBox.SelectedIndexChanged += selectLevelBox_SelectedIndexChanged;
+
+            careerModeMenuItem.Enabled = mode != GameMode.career;
+            certainLevelModeMenuItem.Enabled = mode != GameMode.certainLevel;
+            friendToFriendModeMenuItem.Enabled = mode != GameMode.friendWithFriend;
 
             if (mode == GameMode.career || mode == GameMode.certainLevel) {
                 ai = new GomokuAI(Settings.Default.BoardHeight, Settings.Default.BoardWidth, isUserFirst);
@@ -118,6 +125,7 @@ namespace Gomoku {
                     complexity = minComplexity + (Settings.Default.level - 1) * complexityStep;
                 }
                 else {
+                    level = Settings.Default.lastSelectedLevel;
                     complexity = minComplexity + (level - 1) * complexityStep;
                 }
 
@@ -434,6 +442,9 @@ namespace Gomoku {
             totals = 0;
 
             gameMode = GameMode.friendWithFriend;
+            Settings.Default.lastGameMode = (int)gameMode;
+            Settings.Default.Save();
+
             isUserFirst = true;
             InitGame(gameMode);
         }
@@ -445,6 +456,9 @@ namespace Gomoku {
             totals = 0;
 
             gameMode = GameMode.career;
+            Settings.Default.lastGameMode = (int)gameMode;
+            Settings.Default.Save();
+
             isUserFirst = true;
             InitGame(gameMode);
         }
@@ -456,12 +470,14 @@ namespace Gomoku {
             changeModeMenuItem.HideDropDown();
 
             Settings.Default.lastSelectedLevel = selectLevelBox.SelectedIndex + 1;
-            Settings.Default.Save();
 
             totals = 0;
             level = Settings.Default.lastSelectedLevel;
 
             gameMode = GameMode.certainLevel;
+            Settings.Default.lastGameMode = (int)gameMode;
+            Settings.Default.Save();
+
             isUserFirst = true;
             InitGame(gameMode);
         }

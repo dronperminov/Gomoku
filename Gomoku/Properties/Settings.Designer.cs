@@ -25,7 +25,7 @@ namespace Gomoku.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("32")]
+        [global::System.Configuration.DefaultSettingValueAttribute("35")]
         public int CellSize {
             get {
                 return ((int)(this["CellSize"]));
@@ -137,6 +137,18 @@ namespace Gomoku.Properties {
             }
             set {
                 this["lastSelectedLevel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int lastGameMode {
+            get {
+                return ((int)(this["lastGameMode"]));
+            }
+            set {
+                this["lastGameMode"] = value;
             }
         }
     }
