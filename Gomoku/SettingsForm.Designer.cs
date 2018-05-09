@@ -36,6 +36,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.cellSizeBox = new System.Windows.Forms.NumericUpDown();
+            this.winLineColorBtn = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.cellSizeBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -88,7 +90,7 @@
             // saveBtn
             // 
             this.saveBtn.Font = new System.Drawing.Font("Arkhip", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.saveBtn.Location = new System.Drawing.Point(221, 202);
+            this.saveBtn.Location = new System.Drawing.Point(221, 155);
             this.saveBtn.Name = "saveBtn";
             this.saveBtn.Size = new System.Drawing.Size(111, 36);
             this.saveBtn.TabIndex = 4;
@@ -99,7 +101,7 @@
             // backBtn
             // 
             this.backBtn.Font = new System.Drawing.Font("Arkhip", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.backBtn.Location = new System.Drawing.Point(338, 202);
+            this.backBtn.Location = new System.Drawing.Point(338, 155);
             this.backBtn.Name = "backBtn";
             this.backBtn.Size = new System.Drawing.Size(111, 36);
             this.backBtn.TabIndex = 5;
@@ -111,7 +113,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arkhip", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(11, 126);
+            this.label1.Location = new System.Drawing.Point(253, 23);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(165, 19);
             this.label1.TabIndex = 6;
@@ -120,7 +122,7 @@
             // selectionColorBtn
             // 
             this.selectionColorBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.selectionColorBtn.Location = new System.Drawing.Point(182, 123);
+            this.selectionColorBtn.Location = new System.Drawing.Point(424, 20);
             this.selectionColorBtn.Name = "selectionColorBtn";
             this.selectionColorBtn.Size = new System.Drawing.Size(25, 25);
             this.selectionColorBtn.TabIndex = 7;
@@ -130,7 +132,7 @@
             // aiMoveColorBtn
             // 
             this.aiMoveColorBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.aiMoveColorBtn.Location = new System.Drawing.Point(182, 157);
+            this.aiMoveColorBtn.Location = new System.Drawing.Point(424, 56);
             this.aiMoveColorBtn.Name = "aiMoveColorBtn";
             this.aiMoveColorBtn.Size = new System.Drawing.Size(25, 25);
             this.aiMoveColorBtn.TabIndex = 9;
@@ -141,7 +143,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Arkhip", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(11, 160);
+            this.label2.Location = new System.Drawing.Point(253, 59);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(127, 19);
             this.label2.TabIndex = 8;
@@ -167,7 +169,7 @@
             0,
             0});
             this.cellSizeBox.Minimum = new decimal(new int[] {
-            25,
+            32,
             0,
             0,
             0});
@@ -175,16 +177,38 @@
             this.cellSizeBox.Size = new System.Drawing.Size(53, 23);
             this.cellSizeBox.TabIndex = 11;
             this.cellSizeBox.Value = new decimal(new int[] {
-            25,
+            32,
             0,
             0,
             0});
+            // 
+            // winLineColorBtn
+            // 
+            this.winLineColorBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.winLineColorBtn.Location = new System.Drawing.Point(424, 89);
+            this.winLineColorBtn.Name = "winLineColorBtn";
+            this.winLineColorBtn.Size = new System.Drawing.Size(25, 25);
+            this.winLineColorBtn.TabIndex = 13;
+            this.winLineColorBtn.UseVisualStyleBackColor = true;
+            this.winLineColorBtn.Click += new System.EventHandler(this.winLineColorBtn_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Arkhip", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.Location = new System.Drawing.Point(253, 92);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(158, 19);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "Цвет игр. линии";
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(461, 250);
+            this.ClientSize = new System.Drawing.Size(461, 203);
+            this.Controls.Add(this.winLineColorBtn);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.cellSizeBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.aiMoveColorBtn);
@@ -203,7 +227,7 @@
             this.MinimizeBox = false;
             this.Name = "SettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SettingsForm";
+            this.Text = "Настройки";
             ((System.ComponentModel.ISupportInitialize)(this.cellSizeBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -224,5 +248,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown cellSizeBox;
+        private System.Windows.Forms.Button winLineColorBtn;
+        private System.Windows.Forms.Label label4;
     }
 }

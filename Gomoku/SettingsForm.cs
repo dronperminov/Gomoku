@@ -18,8 +18,19 @@ namespace Gomoku {
 
             selectionColorBtn.BackColor = Properties.Settings.Default.BoardSelectionBackColor;
             aiMoveColorBtn.BackColor = Properties.Settings.Default.AImoveBackColor;
+            winLineColorBtn.BackColor = Properties.Settings.Default.winLineColor;
 
             cellSizeBox.Value = Properties.Settings.Default.CellSize;
+        }
+
+        private Color SelectColor(Color startColor) {
+            ColorDialog dialog = new ColorDialog();
+            dialog.Color = Properties.Settings.Default.BoardSelectionBackColor;
+
+            if (dialog.ShowDialog() != DialogResult.OK)
+                return startColor;
+
+            return dialog.Color;
         }
 
         private void saveBtn_Click(object sender, EventArgs e) {
@@ -27,6 +38,7 @@ namespace Gomoku {
             Properties.Settings.Default.BoardHeight = int.Parse(boardHeightBox.SelectedItem.ToString());
             Properties.Settings.Default.BoardSelectionBackColor = selectionColorBtn.BackColor;
             Properties.Settings.Default.AImoveBackColor = aiMoveColorBtn.BackColor;
+            Properties.Settings.Default.winLineColor = winLineColorBtn.BackColor;
             Properties.Settings.Default.CellSize = (int) cellSizeBox.Value;
             Properties.Settings.Default.Save();
 
@@ -38,23 +50,15 @@ namespace Gomoku {
         }
 
         private void selectionColorBtn_Click(object sender, EventArgs e) {
-            ColorDialog dialog = new ColorDialog();
-            dialog.Color = Properties.Settings.Default.BoardSelectionBackColor;
-
-            if (dialog.ShowDialog() != DialogResult.OK)
-                return;
-
-            selectionColorBtn.BackColor = dialog.Color;
+            selectionColorBtn.BackColor = SelectColor(Properties.Settings.Default.BoardSelectionBackColor);
         }
 
         private void aiMoveColorBtn_Click(object sender, EventArgs e) {
-            ColorDialog dialog = new ColorDialog();
-            dialog.Color = Properties.Settings.Default.AImoveBackColor;
+            aiMoveColorBtn.BackColor = SelectColor(Properties.Settings.Default.AImoveBackColor);
+        }
 
-            if (dialog.ShowDialog() != DialogResult.OK)
-                return;
-
-            aiMoveColorBtn.BackColor = dialog.Color;
+        private void winLineColorBtn_Click(object sender, EventArgs e) {
+            winLineColorBtn.BackColor = SelectColor(Properties.Settings.Default.winLineColor);
         }
     }
 }

@@ -24,7 +24,6 @@ namespace Gomoku {
         const int halfClosedThreeScore = 15;
         const int halfClosedThreeWithBreachScore = 8;
         const int openedTwoScore = 4;
-        const int halfClosedTwoScore = 2;
 
         List<Move> availableMoves;
         int n, m;
@@ -56,9 +55,6 @@ namespace Gomoku {
             new Template("# ## ", halfClosedThreeWithBreachScore), // полузакрытая тройка с брешью
 
             new Template(" ## ", openedTwoScore), // открытая двойка
-
-            new Template("## ", openedTwoScore), // полузакрытая двойка
-            new Template(" ##", openedTwoScore), // полузакрытая двойка
         };
 
         public GomokuAI(int n, int m, bool isUserFirst) {
@@ -100,7 +96,7 @@ namespace Gomoku {
                 if (i == i0) {
                     lines[0] += "0";
                 }
-                else if (board[i, j0].value == "") {
+                else if (board[i, j0].isFree()) {
                     lines[0] += " ";
                 }
                 else if (board.IsPlayerCell(i, j0, player)) {
@@ -118,7 +114,7 @@ namespace Gomoku {
                 if (j == j0) {
                     lines[1] += "0";
                 }
-                else if (board[i0, j].value == "") {
+                else if (board[i0, j].isFree()) {
                     lines[1] += " ";
                 }
                 else if (board.IsPlayerCell(i0, j, player)) {
@@ -136,7 +132,7 @@ namespace Gomoku {
                 if (k == 0) {
                     lines[2] += "0";
                 }
-                else if (board[i0 + k, j0 + k].value == "") {
+                else if (board[i0 + k, j0 + k].isFree()) {
                     lines[2] += " ";
                 }
                 else if (board.IsPlayerCell(i0 + k, j0 + k, player)) {
@@ -154,7 +150,7 @@ namespace Gomoku {
                 if (k == 0) {
                     lines[3] += "0";
                 }
-                else if (board[i0 + k, j0 - k].value == "") {
+                else if (board[i0 + k, j0 - k].isFree()) {
                     lines[3] += " ";
                 }
                 else if (board.IsPlayerCell(i0 + k, j0 - k, player)) {

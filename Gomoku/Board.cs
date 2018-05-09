@@ -20,28 +20,22 @@ namespace Gomoku {
     }
 
     class BoardCell {
-        public readonly string value;
-        public readonly Color color;
+        public readonly Image image;
 
-        public BoardCell() {
-            value = "";
-            color = Color.Black;
+        public BoardCell(Image image = null) {
+            this.image = image;
         }
 
-        public BoardCell(string value, Color color) {
-            this.value = value;
-            this.color = color;
-        }
-
-        public bool isFree() { return value == "";  }
+        public bool isFree() { return image == null;  }
     }
 
     class Board {
         int n, m;
         int lostCells;
         BoardCell[,] board;
+        Player player1, player2;
 
-        public Board(int n, int m) {
+        public Board(int n, int m, Player player1, Player player2) {
             this.n = n;
             this.m = m;
 
@@ -50,7 +44,10 @@ namespace Gomoku {
 
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < m; j++)
-                    board[i, j] = new BoardCell("", Color.Black);
+                    board[i, j] = new BoardCell();
+
+            this.player1 = player1;
+            this.player2 = player2;
         }
 
         public BoardCell this[int i, int j] {
@@ -64,7 +61,7 @@ namespace Gomoku {
         }
 
         public void SetStep(int i, int j, Player player) {
-            board[i, j] = new BoardCell(player.character, player.color);
+            board[i, j] = new BoardCell(player.image);
 
             lostCells--;
         }
@@ -72,9 +69,7 @@ namespace Gomoku {
         public void Draw(Grid grid, bool update = false) {
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < m; j++) {
-                    grid[i, j].button.Text = board[i, j].value;
-                    grid[i, j].button.ForeColor = board[i, j].color;
-                    grid[i, j].button.BackColor = Color.Transparent;
+                    grid[i, j].button.Image = board[i, j].image;
 
                     if (update)
                         grid[i, j].button.Update();
@@ -83,7 +78,7 @@ namespace Gomoku {
         }
 
         public bool IsPlayerCell(int i, int j, Player player) {
-            return board[i, j].value == player.character && board[i, j].color == player.color;
+            return board[i, j].image == player.image;
         }
 
         public int GetLostCells() {

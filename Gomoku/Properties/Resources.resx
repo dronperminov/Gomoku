@@ -124,4 +124,40 @@
   <data name="gomoku" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gomoku.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="gomokuCell" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gomokuCell.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gomokuCellBlack" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gomokuCellBlack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gomokuCellBottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gomokuCellBottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gomokuCellLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gomokuCellLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gomokuCellLeftBottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gomokuCellLeftBottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gomokuCellLeftTop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gomokuCellLeftTop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gomokuCellPoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gomokuCellPoint.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gomokuCellRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gomokuCellRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gomokuCellRightBottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gomokuCellRightBottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gomokuCellRightTop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gomokuCellRightTop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gomokuCellTop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gomokuCellTop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gomokuCellWhite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gomokuCellWhite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

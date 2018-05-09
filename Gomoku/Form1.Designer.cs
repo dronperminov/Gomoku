@@ -44,11 +44,12 @@
             this.rulesLabel = new System.Windows.Forms.Label();
             this.totalLabel = new System.Windows.Forms.Label();
             this.currMoveLabel = new System.Windows.Forms.Label();
-            this.playerLabel = new System.Windows.Forms.Label();
             this.progressLabel = new System.Windows.Forms.Label();
             this.winsPerLevelLabel = new System.Windows.Forms.Label();
             this.lossPerLevelLabel = new System.Windows.Forms.Label();
+            this.playerPicture = new System.Windows.Forms.PictureBox();
             this.menuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.playerPicture)).BeginInit();
             this.SuspendLayout();
             // 
             // winsLabel
@@ -259,18 +260,6 @@
             this.currMoveLabel.TabIndex = 11;
             this.currMoveLabel.Text = "Сейчас ходят:";
             // 
-            // playerLabel
-            // 
-            this.playerLabel.AutoSize = true;
-            this.playerLabel.BackColor = System.Drawing.Color.Transparent;
-            this.playerLabel.Font = new System.Drawing.Font("Arkhip", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.playerLabel.ForeColor = System.Drawing.Color.White;
-            this.playerLabel.Location = new System.Drawing.Point(700, 301);
-            this.playerLabel.Name = "playerLabel";
-            this.playerLabel.Size = new System.Drawing.Size(38, 23);
-            this.playerLabel.TabIndex = 12;
-            this.playerLabel.Text = "hu";
-            // 
             // progressLabel
             // 
             this.progressLabel.AutoSize = true;
@@ -307,16 +296,26 @@
             this.lossPerLevelLabel.TabIndex = 15;
             this.lossPerLevelLabel.Text = "0";
             // 
+            // playerPicture
+            // 
+            this.playerPicture.BackColor = System.Drawing.Color.Transparent;
+            this.playerPicture.Location = new System.Drawing.Point(708, 297);
+            this.playerPicture.Name = "playerPicture";
+            this.playerPicture.Size = new System.Drawing.Size(35, 35);
+            this.playerPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.playerPicture.TabIndex = 16;
+            this.playerPicture.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(769, 548);
+            this.Controls.Add(this.playerPicture);
             this.Controls.Add(this.lossPerLevelLabel);
             this.Controls.Add(this.winsPerLevelLabel);
             this.Controls.Add(this.progressLabel);
-            this.Controls.Add(this.playerLabel);
             this.Controls.Add(this.currMoveLabel);
             this.Controls.Add(this.totalLabel);
             this.Controls.Add(this.rulesLabel);
@@ -333,10 +332,11 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Gomoku";
+            this.Text = "Гомоку";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.playerPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -353,7 +353,6 @@
         private System.Windows.Forms.Label rulesLabel;
         private System.Windows.Forms.Label totalLabel;
         private System.Windows.Forms.Label currMoveLabel;
-        private System.Windows.Forms.Label playerLabel;
         private System.Windows.Forms.ToolStripMenuItem optionsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuExitMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
@@ -367,6 +366,7 @@
         private System.Windows.Forms.ToolStripMenuItem resetProgressMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cancelMoveMenuItem;
         private System.Windows.Forms.ToolStripComboBox selectLevelBox;
+        private System.Windows.Forms.PictureBox playerPicture;
     }
 }
 

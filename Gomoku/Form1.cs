@@ -5,17 +5,25 @@ using Gomoku.Properties;
 
 namespace Gomoku {
     public partial class MainForm : Form {
-        enum GameStatus {
+        public enum GameStatus {
             notGameOver = -1, // не конец игры
             noWinners = 0, // нет победителя (ничья)
             winner = 1 // есть победитель
         }
 
         // режимы игры
-        enum GameMode {
+        public enum GameMode {
             career = 0, // карьера - постепенное увеличение уровня
             certainLevel = 1, // игра на конкретном уровне
             friendWithFriend = 2 // человек против человека
+        }
+
+        // расположение победной комбинации
+        public enum WinGameType {
+            horizontal, // горизонтальная линия
+            vertical, // вертикальная линия
+            mainDiagonal, // главная диагональ
+            sideDiagonal // побочная диагональ
         }
 
         const int winCount = 5; // нужно собрать 5 в ряд
@@ -28,8 +36,8 @@ namespace Gomoku {
         const int winsForLevelUp = 7; // победных игр для перехода на новый уровень
         const int lossForLevelDown = 7; // поражений для уменьшения уровня
 
-        static readonly Player player1 = new Player("X", Color.White); // первый игрок: красный крестик
-        static readonly Player player2 = new Player("O", Color.Black); // второй игрок: чёрный нолик
+        readonly Player player1 = new Player(Resources.gomokuCellBlack); // первый игрок: красный крестик
+        readonly Player player2 = new Player(Resources.gomokuCellWhite); // второй игрок: чёрный нолик
 
         bool isUserFirst = true; // ходит ли человек первым
 
@@ -63,28 +71,35 @@ namespace Gomoku {
             Size gridSize = grid.GetSize();
             Point gridLocation = grid.GetLocation();
 
-            MinimumSize = new Size(gridSize.Width + 300, gridSize.Height + 130);
+            MinimumSize = new Size(gridSize.Width + 300, gridSize.Height + 110);
             Height = MinimumSize.Height;
             Width = MinimumSize.Width;
 
+            rulesLabel.Text = "1.Выбери любую клетку мышкой\n" +
+                "2.Нажми дважды, чтобы сделать ход\n" +
+                "3.Собери " + winCount + " в ряд раньше соперника\n" +
+                "4.Повысь уровень, одержав " + winsForLevelUp + " побед\n" +
+                "5.Не понизь уровень, проиграв " + lossForLevelDown + " раз\n" +
+                "6.Пройди все " + levels + " уровней сложности";
+
             gameNameLabel.Location = new Point((Width - gameNameLabel.Width) / 2, gameNameLabel.Location.Y);
 
-            totalLabel.Location = new Point(gridLocation.X + gridSize.Width + 20, gridLocation.Y);
-            winsLabel.Location = new Point(gridLocation.X + gridSize.Width + 20, gridLocation.Y + 25);
-            lossLabel.Location = new Point(gridLocation.X + gridSize.Width + 20, gridLocation.Y + 50);
+            totalLabel.Location = new Point(gridLocation.X + gridSize.Width + 10, gridLocation.Y);
+            winsLabel.Location = new Point(gridLocation.X + gridSize.Width + 10, gridLocation.Y + 25);
+            lossLabel.Location = new Point(gridLocation.X + gridSize.Width + 10, gridLocation.Y + 50);
 
-            levelLabel.Location = new Point(gridLocation.X + gridSize.Width + 20, gridLocation.Y + 75);
-            complexityLabel.Location = new Point(gridLocation.X + gridSize.Width + 20, gridLocation.Y + 100);
+            levelLabel.Location = new Point(gridLocation.X + gridSize.Width + 10, gridLocation.Y + 75);
+            complexityLabel.Location = new Point(gridLocation.X + gridSize.Width + 10, gridLocation.Y + 100);
 
-            progressLabel.Location = new Point(gridLocation.X + gridSize.Width + 20, gridLocation.Y + 125);
-            winsPerLevelLabel.Location = new Point(gridLocation.X + gridSize.Width + progressLabel.Width + 20, gridLocation.Y + 125);
-            lossPerLevelLabel.Location = new Point(gridLocation.X + gridSize.Width + progressLabel.Width + winsPerLevelLabel.Width + 30, gridLocation.Y + 125);
+            progressLabel.Location = new Point(gridLocation.X + gridSize.Width + 10, gridLocation.Y + 125);
+            winsPerLevelLabel.Location = new Point(gridLocation.X + gridSize.Width + progressLabel.Width + 10, gridLocation.Y + 125);
+            lossPerLevelLabel.Location = new Point(gridLocation.X + gridSize.Width + progressLabel.Width + winsPerLevelLabel.Width + 20, gridLocation.Y + 125);
 
-            currMoveLabel.Location = new Point(gridLocation.X + gridSize.Width + 20, gridLocation.Y + 175);
-            playerLabel.Location = new Point(gridLocation.X + gridSize.Width + 20 + currMoveLabel.Width, gridLocation.Y + 175);
+            currMoveLabel.Location = new Point(gridLocation.X + gridSize.Width + 10, gridLocation.Y + 175);
+            playerPicture.Location = new Point(gridLocation.X + gridSize.Width + 10 + currMoveLabel.Width, gridLocation.Y + 170);
 
-            rulesHeadlineLabel.Location = new Point(gridLocation.X + gridSize.Width + 20 + (rulesLabel.Width - rulesHeadlineLabel.Width) / 2, gridLocation.Y + gridSize.Height - rulesLabel.Height - 20);
-            rulesLabel.Location = new Point(gridLocation.X + gridSize.Width + 20, gridLocation.Y + gridSize.Height - rulesLabel.Height);
+            rulesHeadlineLabel.Location = new Point(gridLocation.X + gridSize.Width + 10 + (rulesLabel.Width - rulesHeadlineLabel.Width) / 2, gridLocation.Y + gridSize.Height - rulesLabel.Height - 40);
+            rulesLabel.Location = new Point(gridLocation.X + gridSize.Width + 10, gridLocation.Y + gridSize.Height - rulesLabel.Height - 20);
 
             for (int i = 1; i <= levels; i++)
                 selectLevelBox.Items.Add("Уровень " + i);
@@ -93,7 +108,8 @@ namespace Gomoku {
         }
 
         void InitGame(GameMode mode) {
-            gameBoard = new Board(Settings.Default.BoardHeight, Settings.Default.BoardWidth);
+            gameBoard = new Board(Settings.Default.BoardHeight, Settings.Default.BoardWidth, player1, player2);
+            grid.Reset();
 
             resetProgressMenuItem.Visible = (mode == GameMode.career);
             cancelMoveMenuItem.Visible = (mode == GameMode.career || mode == GameMode.certainLevel);
@@ -128,15 +144,12 @@ namespace Gomoku {
                     level = Settings.Default.lastSelectedLevel;
                     complexity = minComplexity + (level - 1) * complexityStep;
                 }
-
-                playerLabel.Text = huPlayer.character;
-                playerLabel.ForeColor = huPlayer.color;
+                playerPicture.Image = huPlayer.image;
             }
             else {
                 player = isUserFirst ? player1 : player2;
 
-                playerLabel.Text = player.character;
-                playerLabel.ForeColor = player.color;
+                playerPicture.Image = player.image;
             }
 
             isUserFirst = !isUserFirst;
@@ -235,10 +248,50 @@ namespace Gomoku {
             return gameBoard.GetLostCells() == 0 ? GameStatus.noWinners : GameStatus.notGameOver;
         }
 
+        public Image addLine(Image src, int size, WinGameType type) {
+            Bitmap image = new Bitmap(src);
+            Pen pen = new Pen(Settings.Default.winLineColor, size);
+            Graphics g = Graphics.FromImage(image);
+
+            switch (type) {
+                case WinGameType.horizontal:
+                    g.DrawLine(pen, 0, Settings.Default.CellSize / 2, Settings.Default.CellSize, Settings.Default.CellSize / 2);
+                    break;
+
+                case WinGameType.vertical:
+                    g.DrawLine(pen, Settings.Default.CellSize / 2, 0, Settings.Default.CellSize / 2, Settings.Default.CellSize);
+                    break;
+
+                case WinGameType.mainDiagonal:
+                    g.DrawLine(pen, 0, 0, Settings.Default.CellSize, Settings.Default.CellSize);
+                    break;
+
+                case WinGameType.sideDiagonal:
+                    g.DrawLine(pen, 0, Settings.Default.CellSize, Settings.Default.CellSize, 0);
+                    break;
+            }
+
+            return image;
+        }
+
         void showWinCells(int i, int j, int istep, int jstep, int iscale = 1, int jscale = 1) {
+            WinGameType type;
+
+            if (iscale == 0) {
+                type = WinGameType.horizontal;
+            }
+            else if (jscale == 0) {
+                type = WinGameType.vertical;
+            }
+            else if (iscale == 1 && jscale == 1) {
+                type = WinGameType.mainDiagonal;
+            }
+            else {
+                type = WinGameType.sideDiagonal;
+            }
+
             for (int k = 0; k < winCount; k++) {
-                grid[i + istep + k * iscale, j + jstep + k * jscale].button.BackColor = Color.Orange;
-                grid[i + istep + k * iscale, j + jstep + k * jscale].button.ForeColor = Color.White;
+                grid[i + istep + k * iscale, j + jstep + k * jscale].button.Image = addLine(grid[i + istep + k * iscale, j + jstep + k * jscale].button.Image, 6, type);
             }
         }
 
@@ -362,9 +415,8 @@ namespace Gomoku {
                     return;
                 }
 
-                playerLabel.Text = aiPlayer.character;
-                playerLabel.ForeColor = aiPlayer.color;
-                playerLabel.Update();
+                playerPicture.Image = aiPlayer.image;
+                playerPicture.Update();
 
                 lastAIMove = ai.MakeMove(ref gameBoard, aiPlayer, huPlayer, aiPlayer, complexity);
                 gameBoard.Draw(grid);
@@ -383,9 +435,8 @@ namespace Gomoku {
                 grid[lastAIMove.i, lastAIMove.j].button.BackColor = Settings.Default.AImoveBackColor;
                 grid[lastAIMove.i, lastAIMove.j].button.Update();
 
-                playerLabel.Text = huPlayer.character;
-                playerLabel.ForeColor = huPlayer.color;
-                playerLabel.Update();
+                playerPicture.Image = huPlayer.image;
+                playerPicture.Update();
             }
             else {
                 if ((status = isGameOver(player)) != GameStatus.notGameOver) {
@@ -395,8 +446,7 @@ namespace Gomoku {
 
                 player = player == player1 ? player2 : player1;
 
-                playerLabel.Text = player.character;
-                playerLabel.ForeColor = player.color;
+                playerPicture.Image = player.image;
             }
         }
 

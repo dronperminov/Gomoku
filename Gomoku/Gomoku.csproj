@@ -107,6 +107,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="gomoku.ico" />
+    <None Include="Resources\gomokuCellWhite.png" />
+    <None Include="Resources\gomokuCellBlack.png" />
+    <None Include="Resources\gomokuCellRightTop.png" />
+    <None Include="Resources\gomokuCellRightBottom.png" />
+    <None Include="Resources\gomokuCellLeftTop.png" />
+    <None Include="Resources\gomokuCellLeftBottom.png" />
+    <None Include="Resources\gomokuCellTop.png" />
+    <None Include="Resources\gomokuCellRight.png" />
+    <None Include="Resources\gomokuCellLeft.png" />
+    <None Include="Resources\gomokuCellBottom.png" />
+    <None Include="Resources\gomokuCellPoint.png" />
+    <None Include="Resources\gomokuCell.png" />
     <None Include="Resources\gomoku.jpg" />
     <None Include="Resources\wood.png" />
   </ItemGroup>

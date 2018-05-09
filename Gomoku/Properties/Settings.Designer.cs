@@ -151,5 +151,17 @@ namespace Gomoku.Properties {
                 this["lastGameMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Red")]
+        public global::System.Drawing.Color winLineColor {
+            get {
+                return ((global::System.Drawing.Color)(this["winLineColor"]));
+            }
+            set {
+                this["winLineColor"] = value;
+            }
+        }
     }
 }
