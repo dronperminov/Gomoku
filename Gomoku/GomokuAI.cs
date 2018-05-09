@@ -17,7 +17,7 @@ namespace Gomoku {
 
     class GomokuAI {
         const int fiveScore = 1000;
-        const int openedFourScore = 80;
+        const int openedFourScore = 200;
         const int halfClosedFourScore = 40;
         const int openedThreeScore = 30;
         const int halfClosedFourWithBreachScore = 20;
@@ -214,7 +214,7 @@ namespace Gomoku {
                 if (aiImportance >= fiveScore)
                     aiImportance *= 10;
 
-                availableMoves[i] = new Move(availableMoves[i].i, availableMoves[i].j, Math.Max(huImportance, aiImportance));
+                availableMoves[i] = new Move(availableMoves[i].i, availableMoves[i].j, (int) Math.Max(huImportance, aiImportance * 1.05));
             }
         }
 

@@ -54,7 +54,7 @@ namespace Gomoku {
 
                     Image image;
 
-                    if (i == 2 && j == 2 || i == height - 3 && j == width - 3 || i == 2 && j == width - 3 || i == height - 3 && j == 2 || i == height / 2 && j == width / 2) {
+                    if (i == 3 && j == 3 || i == height - 4 && j == width - 4 || i == 3 && j == width - 4 || i == height - 4 && j == 3 || i == height / 2 && j == width / 2) {
                         image = Properties.Resources.gomokuCellPoint;
                     }
                     else if (i == 0 && j == 0) {
@@ -125,27 +125,23 @@ namespace Gomoku {
             for (int i = 0; i < height; i++) {
                 Label label = new Label();
                 label.Text = (height - i).ToString();
-                label.Font = new Font("Arial", cellSize / 4);
-                label.Width = 1 + cellSize / 2;
+                label.AutoSize = true;
+                label.Font = new Font("Arkhip", cellSize / 5);
                 label.BackColor = Color.Transparent;
-                label.Margin = new Padding(0);
-                label.Location = new Point(location.X - label.Width / 3, location.Y + i * (cellSize - 1) + label.Height / 2 + 5);
+                label.Location = new Point(location.X - label.PreferredWidth + 5, location.Y + i * (cellSize - 1) + cellSize / 3);
 
                 form.Controls.Add(label);
-                label.BringToFront();
             }
 
             for (int j = 0; j < width; j++) {
                 Label label = new Label();
                 label.Text = ((char)('A' + j)).ToString();
-                label.Font = new Font("Arial", cellSize / 4);
-                label.Width = 10 + cellSize / 4;
+                label.AutoSize = true;
+                label.Font = new Font("Arkhip", cellSize / 5);
                 label.BackColor = Color.Transparent;
-                label.Margin = new Padding(0);
-                label.Location = new Point(location.X + j * (cellSize - 1) + label.Width / 2 + 5, location.Y - label.Height / 2);
+                label.Location = new Point(location.X + j * (cellSize - 1) + cellSize / 3, location.Y - label.PreferredHeight + 3);
 
                 form.Controls.Add(label);
-                label.BringToFront();
             }
         }
 

@@ -65,7 +65,7 @@ namespace Gomoku {
         int canceledMoves = 0; // количество отменённых ходов
 
         void InitGrid() {
-            grid = new Grid(Settings.Default.BoardWidth, Settings.Default.BoardHeight, Settings.Default.CellSize, new Point(12, 80), this);
+            grid = new Grid(Settings.Default.BoardWidth, Settings.Default.BoardHeight, Settings.Default.CellSize, new Point(22, 85), this);
             grid.cellClick += huStep;
 
             Size gridSize = grid.GetSize();
@@ -536,7 +536,7 @@ namespace Gomoku {
             ai.AddMove(lastAIMove.i, lastAIMove.j);
             gameBoard[lastAIMove.i, lastAIMove.j] = new BoardCell();
             gameBoard[lastHuMove.i, lastHuMove.j] = new BoardCell();
-
+            
             cancelMoveMenuItem.Enabled = false;
             canceledMoves++;
 
